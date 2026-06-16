@@ -11,6 +11,7 @@ const navLinks = [
   { name: 'Services', href: '/services' },
   { name: 'Portfolio', href: '/portfolio' },
   { name: 'Pricing', href: '/pricing' },
+  { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
 ];
 
@@ -32,7 +33,6 @@ export function Navigation() {
     return () => { document.body.style.overflow = prev; };
   }, [isMobileMenuOpen]);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
@@ -61,12 +61,12 @@ export function Navigation() {
         </Link>
 
         {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center gap-7">
+        <div className="hidden md:flex items-center gap-6">
           {navLinks.map(link => (
             <Link
               key={link.name}
               to={link.href}
-              className={`relative text-[0.95rem] font-semibold tracking-[0.01em] transition-colors duration-300 ${isActive(link.href) ? 'text-foreground' : 'text-foreground/75 hover:text-foreground'}`}
+              className={`relative text-[0.9rem] font-semibold tracking-[0.01em] transition-colors duration-300 ${isActive(link.href) ? 'text-foreground' : 'text-foreground/75 hover:text-foreground'}`}
             >
               {link.name}
               {isActive(link.href) && (
