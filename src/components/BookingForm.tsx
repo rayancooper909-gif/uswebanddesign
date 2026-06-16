@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CalendarCheck, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const services = [
   'Web Development',
@@ -21,6 +22,8 @@ const services = [
   'Combo Plan',
   'Other',
 ];
+
+const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/rayancooper909@gmail.com';
 
 interface BookingFormProps {
   heading?: string;
@@ -41,20 +44,64 @@ export function BookingForm({
     message: '',
   });
 
-  const set = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setForm(prev => ({ ...prev, [field]: e.target.value }));
+  const set = (field: keyof typeof form) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setForm(prev => ({ ...prev, [field]: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.service) {
+
+    if (!form.name.trim() || !form.email.trim() || !form.service) {
       toast({ title: 'Please fill in all required fields.', variant: 'destructive' });
       return;
     }
+
     setLoading(true);
-    await new Promise(r => setTimeout(r, 900));
-    setLoading(false);
-    toast({ title: "We've received your booking request!", description: "We'll reach out within 24 hours." });
-    setForm({ name: '', email: '', phone: '', service: '', message: '' });
+
+    try {
+      let delivered = false;
+
+      // Primary: send email via FormSubmit
+      try {
+        const res = await fetch(FORMSUBMIT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            phone: form.phone || 'Not provided',
+            service: form.service,
+            message: form.message || 'No message provided',
+            _subject: `New Booking Request: ${form.service} — ${form.name}`,
+            _captcha: 'false',
+          }),
+        });
+        if (res.ok) delivered = true;
+      } catch {
+        // fall through to Supabase
+      }
+
+      // Fallback: save to Supabase so no lead is ever lost
+      if (!delivered) {
+        await supabase.from('contact_submissions').insert({
+          name: form.name,
+          email: form.email,
+          phone: form.phone || null,
+          message: `[Booking — ${form.service}] ${form.message}`,
+        });
+      }
+
+      toast({
+        title: "Booking request received!",
+        description: "We'll reach out within 24 hours to confirm your free consultation.",
+      });
+
+      setForm({ name: '', email: '', phone: '', service: '', message: '' });
+    } catch (err) {
+      toast({ title: 'Something went wrong. Please try again.', variant: 'destructive' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
