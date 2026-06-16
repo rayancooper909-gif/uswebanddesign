@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-//  HOW TO ADD A BLOG POST  —  3 steps, takes about 2 minutes
+//  HOW TO ADD A BLOG POST  —  3 steps, takes about 3 minutes
 // ═══════════════════════════════════════════════════════════════════
 //
 //  STEP 1 — Copy this block and paste it right after the line below
