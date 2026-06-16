@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SITEMAP — HOW TO KEEP THIS UPDATED
+  ─────────────────────────────────────────────────────────────────────────────
+  1. Replace "https://uswebanddesign.com" with your actual live domain once published.
+  2. When you add a new blog post, copy any <url> block below and paste it
+     with the new slug and today's date. Set <priority>0.7</priority>.
+  3. When you add a new city page, copy a /web-design/ block and update the slug.
+  4. Submit this file to Google Search Console:
+     → search.google.com/search-console → Sitemaps → paste your sitemap URL
+  ─────────────────────────────────────────────────────────────────────────────
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- MAIN PAGES -->
+  <url>
+    <loc>https://uswebanddesign.com/</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://uswebanddesign.com/about</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uswebanddesign.com/services</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://uswebanddesign.com/portfolio</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uswebanddesign.com/pricing</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://uswebanddesign.com/contact</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- BLOG -->
+  <url>
+    <loc>https://uswebanddesign.com/blog</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- BLOG POSTS — add a new <url> block here each time you publish a post -->
+  <url>
+    <loc>https://uswebanddesign.com/blog/how-to-get-more-leads-from-your-website</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://uswebanddesign.com/blog/why-local-seo-matters-for-small-business</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://uswebanddesign.com/blog/what-makes-a-website-look-professional</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- LOCAL SEO PAGES — add a new <url> block when you add a city -->
+  <url>
+    <loc>https://uswebanddesign.com/web-design/los-angeles</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uswebanddesign.com/web-design/new-york</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uswebanddesign.com/web-design/houston</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uswebanddesign.com/web-design/chicago</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uswebanddesign.com/web-design/miami</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uswebanddesign.com/web-design/phoenix</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
