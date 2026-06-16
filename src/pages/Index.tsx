@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Navigation } from '@/components/Navigation';
 import { HeroSection } from '@/components/HeroSection';
-import { CursorTracker } from '@/components/CursorTracker';
 
 // Lazy load below-the-fold components to reduce initial bundle size
 const AboutSection = lazy(() => import('@/components/AboutSection').then(m => ({ default: m.AboutSection })));
@@ -29,8 +28,7 @@ const SectionDivider = () => (
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden cursor-none">
-      <CursorTracker />
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Navigation />
       <main>
         <HeroSection />

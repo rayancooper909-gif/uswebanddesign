@@ -25,7 +25,7 @@ function Row({ items, reverse = false }: { items: string[]; reverse?: boolean })
       <motion.div
         className="flex min-w-max gap-3 py-2"
         animate={reverse ? { x: ['-50%', '0%'] } : { x: ['0%', '-50%'] }}
-        transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: 73, repeat: Infinity, ease: 'linear' }}
       >
         {list.map((item, idx) => (
           <span
@@ -48,4 +48,3 @@ export function KineticTicker() {
     </div>
   );
 }
-
