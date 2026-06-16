@@ -1,5 +1,4 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef } from 'react';
 import {
   Accordion,
@@ -7,37 +6,41 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { Reveal } from '@/components/motion/Reveal';
+import { RevealStagger } from '@/components/motion/RevealStagger';
+import { staggerItem } from '@/lib/motion';
 
 const faqs = [
   {
-    question: 'What file formats do you deliver?',
-    answer: 'We deliver all major embroidery formats including DST, PES, JEF, EXP, XXX, VP3, and more. Just let us know what format you need and we\'ll include it with your order.',
+    question: 'How long does a typical website project take?',
+    answer: 'Most standard business websites take 1-3 weeks depending on scope, content readiness, and revision rounds. Larger projects like custom portals or online stores can take longer.',
   },
   {
-    question: 'What is your turnaround time?',
-    answer: 'Our standard turnaround is 3-4 hours for most designs. Complex designs may take up to 24 hours. Rush service is available for urgent projects.',
+    question: 'Do you provide domain and hosting setup?',
+    answer: 'Yes. We can handle domain connection, hosting setup, SSL, and launch configuration so your website goes live smoothly and securely.',
   },
   {
-    question: 'Do you offer revisions?',
-    answer: 'Yes! We offer unlimited revisions until you\'re completely satisfied with your design. Our goal is to ensure every file runs perfectly on your machines.',
+    question: 'Can you redesign my existing website?',
+    answer: 'Absolutely. We can modernize your current website with better visuals, improved structure, mobile optimization, and conversion-focused UX.',
   },
   {
-    question: 'How do I submit my artwork?',
-    answer: 'You can submit artwork in any format - JPG, PNG, PDF, AI, EPS, or even a sketch. We\'ll work with whatever you have and create a clean embroidery file.',
+    question: 'Do you include SEO in your services?',
+    answer: 'Yes, we provide foundational on-page SEO with all websites, and we also offer dedicated SEO packages for ongoing growth.',
   },
   {
-    question: 'What stitch counts can you handle?',
-    answer: 'We handle everything from simple logos (under 5,000 stitches) to complex jacket backs (100,000+ stitches). Our pricing is transparent and based on design complexity.',
+    question: 'Will my website be mobile-friendly?',
+    answer: 'Yes. Every project is built with responsive design so your site performs well on desktop, tablet, and mobile devices.',
   },
   {
-    question: 'Do you offer bulk pricing for shops?',
-    answer: 'Absolutely! Our retainer plans offer significant savings for shops with regular digitizing needs. Contact us to discuss a custom plan that fits your volume.',
+    question: 'Can I request changes after delivery?',
+    answer: 'Yes. We include revision rounds during the project, and we offer post-launch support plans for future updates and improvements.',
   },
 ];
 
 export function FAQSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const reduceMotion = useReducedMotion();
 
   return (
     <section className="section-padding relative overflow-hidden">
@@ -46,61 +49,45 @@ export function FAQSection() {
       
       <div className="container-custom relative z-10">
         {/* Section Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <motion.span 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5 }}
+        <div ref={ref} className="text-center mb-12 md:mb-16">
+          <Reveal
+            as="span"
+            variant="zoom"
+            delay={0.02}
             className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-primary/10 to-gold-light/10 text-sm font-medium text-foreground mb-4 border border-primary/20"
           >
             FAQ
-          </motion.span>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-display font-bold tracking-tight"
-          >
+          </Reveal>
+          <Reveal as="h2" variant="up" delay={0.08} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold tracking-tight mb-3">
             Frequently Asked Questions
-          </motion.h2>
-        </motion.div>
+          </Reveal>
+          <Reveal as="p" variant="up" delay={0.12} className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+            Clear answers about timelines, support, hosting, and revisions.
+          </Reveal>
+        </div>
 
         {/* FAQ Accordion */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-3xl mx-auto"
-        >
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.1 * index }}
-              >
+        <Reveal as="div" variant="up" delay={0.12} className="max-w-3xl mx-auto">
+          <RevealStagger stagger={reduceMotion ? 0 : 0.1} delayChildren={reduceMotion ? 0 : 0.05}>
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq, index) => (
+                <motion.div key={index} variants={staggerItem(!!reduceMotion)}>
                 <AccordionItem 
                   value={`item-${index}`} 
-                  className="border border-border rounded-xl px-6 bg-card hover:bg-yellow-50/20 transition-colors duration-300"
+                  className="premium-panel rounded-xl px-4 sm:px-5 md:px-6 transition-colors duration-300 border-border/70"
                 >
-                  <AccordionTrigger className="text-left font-display font-semibold text-foreground hover:text-primary transition-colors py-5">
+                  <AccordionTrigger className="text-left font-display font-semibold text-foreground hover:text-primary transition-colors py-4 sm:py-5 text-sm sm:text-base md:text-lg leading-snug">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                  <AccordionContent className="text-foreground/90 pb-5 leading-relaxed text-sm md:text-base">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
-              </motion.div>
-            ))}
-          </Accordion>
-        </motion.div>
+                </motion.div>
+              ))}
+            </Accordion>
+          </RevealStagger>
+        </Reveal>
       </div>
     </section>
   );

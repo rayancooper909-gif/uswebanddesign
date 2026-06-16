@@ -1,7 +1,9 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef } from 'react';
 import { Upload, Cpu, CheckCircle, Zap } from 'lucide-react';
+import { Reveal } from '@/components/motion/Reveal';
+import { RevealStagger } from '@/components/motion/RevealStagger';
+import { staggerItem } from '@/lib/motion';
 
 const steps = [
   {
@@ -30,32 +32,10 @@ const steps = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
 export function HowItWorksSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const reduceMotion = useReducedMotion();
 
   return (
     <section className="section-padding bg-foreground text-background overflow-hidden relative">
@@ -68,33 +48,22 @@ export function HowItWorksSection() {
       
       <div className="container-custom relative z-10">
         {/* Section Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <motion.span 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5 }}
+        <div ref={ref} className="text-center mb-16">
+          <Reveal
+            as="span"
+            variant="zoom"
+            delay={0.02}
             className="inline-block px-4 py-1.5 rounded-full bg-background/10 text-sm font-medium mb-4 border border-background/20"
           >
             How It Works
-          </motion.span>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-display font-bold tracking-tight"
-          >
+          </Reveal>
+          <Reveal as="h2" variant="up" delay={0.08} className="text-3xl md:text-4xl lg:text-5xl font-display font-bold tracking-tight">
             Simple. Fast.{' '}
             <span className="bg-gradient-to-r from-primary via-gold-light to-primary bg-clip-text text-transparent">
               Reliable.
             </span>
-          </motion.h2>
-        </motion.div>
+          </Reveal>
+        </div>
 
         {/* Steps */}
         <div className="relative">
@@ -108,16 +77,15 @@ export function HowItWorksSection() {
             <div className="h-full bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
           </motion.div>
 
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
+          <RevealStagger
             className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6"
+            stagger={reduceMotion ? 0 : 0.14}
+            delayChildren={reduceMotion ? 0 : 0.08}
           >
             {steps.map((step, index) => (
               <motion.div
                 key={step.number}
-                variants={itemVariants}
+                variants={staggerItem(!!reduceMotion)}
                 whileHover={{ y: -8 }}
                 className="relative text-center lg:text-left group"
               >
@@ -158,7 +126,7 @@ export function HowItWorksSection() {
                 )}
               </motion.div>
             ))}
-          </motion.div>
+          </RevealStagger>
         </div>
       </div>
     </section>

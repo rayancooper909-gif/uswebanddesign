@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { HeroPatchGrid } from './HeroPatchGrid';
 
 export function CTASection() {
   return (
@@ -14,10 +15,30 @@ export function CTASection() {
         >
           {/* Background gradient */}
           <div className="absolute inset-0 bg-gradient-to-br from-foreground via-charcoal to-foreground" />
+
+          {/* Hero-style patch wall (subtle) */}
+          <div
+            className="absolute inset-0 opacity-[0.55]"
+            style={{
+              maskImage: 'radial-gradient(closest-side, rgba(0,0,0,1) 42%, rgba(0,0,0,0) 100%)',
+              WebkitMaskImage: 'radial-gradient(closest-side, rgba(0,0,0,1) 42%, rgba(0,0,0,0) 100%)',
+            }}
+            aria-hidden="true"
+          >
+            <div className="hidden md:block absolute -left-[6%] top-0 h-full w-[46%] rotate-[-2deg]">
+              <HeroPatchGrid direction="up" />
+            </div>
+            <div className="hidden md:block absolute -right-[6%] top-0 h-full w-[46%] rotate-[2deg]">
+              <HeroPatchGrid direction="down" />
+            </div>
+          </div>
           
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-radial from-primary/20 via-transparent to-transparent rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-radial from-gold-light/15 via-transparent to-transparent rounded-full blur-3xl" />
+
+          {/* Readability overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-foreground/75 via-foreground/65 to-foreground/80" />
           
           {/* Content */}
           <div className="relative z-10 py-16 md:py-24 px-8 md:px-16 text-center">
@@ -39,7 +60,7 @@ export function CTASection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-background/70 text-lg mb-8 max-w-xl mx-auto"
             >
-              Join 500+ embroidery shops that trust StitchPro for precision digitizing. 
+              Join 500+ embroidery shops that trust Bold Digitizing for precision digitizing. 
               Get your first design in hours, not days.
             </motion.p>
             

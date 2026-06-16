@@ -1,152 +1,140 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+  BadgeDollarSign,
+  BadgeHelp,
+  Megaphone,
+  MonitorSmartphone,
+  Palette,
+  Search,
+  ShoppingCart,
+  Signature,
+} from 'lucide-react';
+import { Reveal } from '@/components/motion/Reveal';
+import { RevealStagger } from '@/components/motion/RevealStagger';
+import { staggerItem } from '@/lib/motion';
 
-import digitizingHorse from '@/assets/services/digitizing-horse.png';
-import digitizingCat from '@/assets/services/digitizing-cat.png';
-import digitizingSkull from '@/assets/services/digitizing-skull.png';
+const serviceTags = [
+  'Web Development',
+  'Logo Design',
+  'Business Cards',
+  'Branding',
+  'Web Content',
+  'Online Store',
+  'SMM',
+  'SEO',
+  'PPC',
+];
 
-const services = [{
-  title: 'Custom Embroidery Digitizing',
-  description: 'Transform any artwork into machine-ready embroidery files with precision stitching for logos, monograms, and complex designs.',
-  image: digitizingHorse
-}, {
-  title: 'Vector Art Conversion',
-  description: 'Convert raster images to crisp, scalable vector files. Perfect for print, signage, and high-resolution applications.',
-  image: digitizingCat
-}, {
-  title: 'Custom Patch Design',
-  description: 'Create stunning embroidered patches with detailed edge finishing. Ideal for uniforms, merchandise, and brand applications.',
-  image: digitizingSkull
-}];
-const containerVariants = {
-  hidden: {
-    opacity: 0
+const services = [
+  {
+    title: 'Web Development',
+    subtitle: 'Modern, responsive websites built for speed and conversions.',
+    icon: MonitorSmartphone,
   },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.1
-    }
-  }
-};
-const itemVariants = {
-  hidden: {
-    opacity: 0,
-    y: 40
+  {
+    title: 'Logo Design',
+    subtitle: 'Distinctive logo systems that make your brand recognizable.',
+    icon: Signature,
   },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut" as const
-    }
-  }
-};
+  {
+    title: 'Business Cards',
+    subtitle: 'Premium card layouts that reflect your brand quality.',
+    icon: BadgeDollarSign,
+  },
+  {
+    title: 'Branding',
+    subtitle: 'Consistent visual identity across digital and print touchpoints.',
+    icon: Palette,
+  },
+  {
+    title: 'Web Content',
+    subtitle: 'Clear, persuasive messaging written for users and search.',
+    icon: BadgeHelp,
+  },
+  {
+    title: 'Online Store',
+    subtitle: 'Sales-focused eCommerce stores with smooth buying flow.',
+    icon: ShoppingCart,
+  },
+  {
+    title: 'SMM & PPC',
+    subtitle: 'Performance marketing campaigns that generate quality leads.',
+    icon: Megaphone,
+  },
+  {
+    title: 'SEO',
+    subtitle: 'Technical and on-page optimization for long-term growth.',
+    icon: Search,
+  },
+];
+
 export function ServicesSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, {
-    once: true,
-    margin: '-100px'
-  });
-  return <section className="section-padding bg-animated-gradient">
-      <div className="container-custom">
-        {/* Section Header */}
-        <motion.div initial={{
-        opacity: 0,
-        y: 30
-      }} animate={isInView ? {
-        opacity: 1,
-        y: 0
-      } : {}} transition={{
-        duration: 0.6
-      }} className="text-center mb-16">
-          <motion.span initial={{
-          opacity: 0,
-          scale: 0.9
-        }} animate={isInView ? {
-          opacity: 1,
-          scale: 1
-        } : {}} transition={{
-          duration: 0.5
-        }} className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-primary/10 to-gold-light/10 text-sm font-medium text-foreground mb-4 border border-primary/20">
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <section id="services" className="section-padding relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-light-gray/40 to-background" />
+
+      <div className="container-custom relative z-10">
+        <div className="text-center mb-10 md:mb-12">
+          <Reveal
+            as="span"
+            variant="zoom"
+            delay={0.02}
+            className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-primary/10 to-gold-light/10 text-sm font-medium text-foreground mb-4 border border-primary/20"
+          >
             Our Services
-          </motion.span>
-          <motion.h2 initial={{
-          opacity: 0,
-          y: 20
-        }} animate={isInView ? {
-          opacity: 1,
-          y: 0
-        } : {}} transition={{
-          duration: 0.6,
-          delay: 0.1
-        }} className="text-3xl md:text-4xl lg:text-5xl font-display font-bold tracking-tight">
-            Everything Your Shop Needs
-          </motion.h2>
-        </motion.div>
+          </Reveal>
+          <Reveal
+            as="h2"
+            variant="up"
+            delay={0.08}
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold tracking-tight"
+          >
+            Solutions for Every Growth Stage
+          </Reveal>
+        </div>
 
-        {/* Services Grid */}
-        <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={isInView ? 'visible' : 'hidden'} className="grid md:grid-cols-3 gap-6 lg:gap-8">
-          {services.map((service, index) => <motion.div key={service.title} variants={itemVariants} whileHover={{
-          y: -8,
-          transition: {
-            duration: 0.3
-          }
-        }} className="group relative rounded-2xl border border-border overflow-hidden bg-card hover:bg-muted/20 transition-colors duration-300">
-              {/* Shine effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              </div>
+        <Reveal as="div" variant="up" delay={0.12} className="flex flex-wrap justify-center gap-2 mb-8 md:mb-10">
+          {serviceTags.map((tag) => (
+            <span
+              key={tag}
+              className="px-3 sm:px-4 py-1 text-[11px] sm:text-xs md:text-sm font-medium border border-primary/30 bg-card/70 text-foreground/85"
+            >
+              {tag}
+            </span>
+          ))}
+        </Reveal>
 
-              {/* Image */}
-              <div className="relative h-56 overflow-hidden">
-                <motion.img src={service.image} alt={service.title} className="w-full h-full object-cover" whileHover={{
-              scale: 1.1
-            }} transition={{
-              duration: 0.7,
-              ease: [0.25, 0.46, 0.45, 0.94]
-            }} />
-                {/* Hover overlay */}
-                
-              </div>
-
-              {/* Content */}
-              <div className="relative p-6 z-10">
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <h3 className="text-xl font-display font-semibold leading-tight">
-                    {service.title}
-                  </h3>
-                  <motion.div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-background opacity-0 group-hover:opacity-100 transition-all duration-300" whileHover={{
-                scale: 1.1,
-                rotate: 45
-              }}>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </motion.div>
+        <RevealStagger
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6"
+          stagger={reduceMotion ? 0 : 0.1}
+          delayChildren={reduceMotion ? 0 : 0.05}
+        >
+          {services.map((service) => (
+            <motion.div
+              key={service.title}
+              variants={staggerItem(!!reduceMotion)}
+              whileHover={{ y: -6 }}
+              className="premium-panel relative h-full rounded-2xl p-4 sm:p-5 md:p-6 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-white/10 to-accent/6" />
+              <div className="relative z-10">
+                <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl border border-primary/25 bg-background/70 flex items-center justify-center mb-3 sm:mb-4">
+                  <service.icon className="h-5 w-5 text-primary" />
                 </div>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {service.description}
+                <h3 className="text-base sm:text-lg font-display font-semibold leading-tight mb-2">
+                  {service.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {service.subtitle}
                 </p>
-                {/* Animated accent line */}
-                <motion.div className="mt-6 h-0.5 bg-gradient-to-r from-primary via-gold-light to-transparent" initial={{
-              width: 0
-            }} whileInView={{
-              width: '100%'
-            }} transition={{
-              duration: 0.8,
-              delay: 0.3 + index * 0.1
-            }} viewport={{
-              once: true
-            }} />
               </div>
-
-              {/* Border glow on hover */}
-              <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-primary/20 transition-colors duration-300 pointer-events-none" />
-            </motion.div>)}
-        </motion.div>
+            </motion.div>
+          ))}
+        </RevealStagger>
       </div>
-    </section>;
+    </section>
+  );
 }
+

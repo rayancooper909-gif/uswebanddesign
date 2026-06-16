@@ -8,9 +8,9 @@ const footerLinks = {
     { name: 'Contact', href: '#contact' },
   ],
   services: [
-    { name: 'Embroidery Digitizing', href: '#' },
-    { name: 'Vector Conversion', href: '#' },
-    { name: 'Patch Design', href: '#' },
+    { name: 'Web Development', href: '#pricing' },
+    { name: 'Branding', href: '#services' },
+    { name: 'SEO & Marketing', href: '#services' },
   ],
   legal: [
     { name: 'Privacy Policy', href: '#' },
@@ -22,32 +22,22 @@ export function Footer() {
   return (
     <footer id="contact" className="bg-foreground text-background">
       {/* Footer Links */}
-      <div className="container-custom py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+      <div className="container-custom py-12 md:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 lg:gap-12">
           {/* Logo & Description */}
           <div className="col-span-2 md:col-span-1">
-            <a href="#home" className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-background flex items-center justify-center">
-                <svg viewBox="0 0 24 24" className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                  <path d="M2 17l10 5 10-5" />
-                  <path d="M2 12l10 5 10-5" />
-                </svg>
-              </div>
-              <span className="font-display font-bold text-lg">Bolddigitizing</span>
-            </a>
-            <p className="text-background/60 text-sm leading-relaxed mb-6">
-              Premium embroidery digitizing services trusted by professionals nationwide.
+            <p className="text-background/60 text-sm leading-relaxed mb-5 md:mb-6">
+              Premium web design, branding, and digital marketing solutions for growing businesses.
             </p>
             {/* Contact Info */}
             <div className="space-y-2">
-              <a href="mailto:Bolddigitizing01@gmail.com" className="flex items-center gap-2 text-sm text-background/60 hover:text-primary transition-colors">
+              <a href="mailto:rayancooper909@gmail.com" className="flex items-start gap-2 break-all text-sm text-background/60 hover:text-primary transition-colors">
                 <Mail className="w-4 h-4" />
-                Bolddigitizing01@gmail.com
+                rayancooper909@gmail.com
               </a>
-              <a href="tel:+1-469-960-7558" className="flex items-center gap-2 text-sm text-background/60 hover:text-primary transition-colors">
+              <a href="tel:+14699607558" className="flex items-start gap-2 break-all text-sm text-background/60 hover:text-primary transition-colors">
                 <Phone className="w-4 h-4" />
-                (469) 960-7558
+                +1 469 960 7558
               </a>
             </div>
             {/* Social Links */}
@@ -124,11 +114,11 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-background/10 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mt-12 md:mt-16 pt-6 md:pt-8 border-t border-background/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-background/60">
             © {new Date().getFullYear()} Bolddigitizing. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 md:gap-6">
             <a href="#" className="text-sm text-background/60 hover:text-primary transition-colors">
               Privacy
             </a>

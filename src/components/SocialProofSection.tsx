@@ -1,6 +1,7 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
+import { RevealStagger } from '@/components/motion/RevealStagger';
+import { staggerItem } from '@/lib/motion';
 
 const stats = [
   {
@@ -63,36 +64,22 @@ function useCountUp(end: number, duration: number = 2000, start: boolean = false
   return count;
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.9 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
-function StatItem({ stat, index, isInView }: { stat: typeof stats[0]; index: number; isInView: boolean }) {
+function StatItem({
+  stat,
+  index,
+  isInView,
+  reduceMotion,
+}: {
+  stat: (typeof stats)[0];
+  index: number;
+  isInView: boolean;
+  reduceMotion: boolean;
+}) {
   const count = useCountUp(stat.number, 2000, isInView);
 
   return (
     <motion.div
-      variants={itemVariants}
+      variants={staggerItem(reduceMotion)}
       whileHover={{ scale: 1.05, y: -5 }}
       className="text-center group"
     >
@@ -136,6 +123,7 @@ function StatItem({ stat, index, isInView }: { stat: typeof stats[0]; index: num
 export function SocialProofSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const reduceMotion = useReducedMotion();
 
   return (
     <section className="py-16 md:py-24 relative overflow-hidden">
@@ -147,17 +135,22 @@ export function SocialProofSection() {
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent" />
       
       <div className="container-custom relative z-10">
-        <motion.div
+        <RevealStagger
           ref={ref}
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
           className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12"
+          stagger={reduceMotion ? 0 : 0.14}
+          delayChildren={reduceMotion ? 0 : 0.05}
         >
           {stats.map((stat, index) => (
-            <StatItem key={stat.label} stat={stat} index={index} isInView={isInView} />
+            <StatItem
+              key={stat.label}
+              stat={stat}
+              index={index}
+              isInView={isInView}
+              reduceMotion={!!reduceMotion}
+            />
           ))}
-        </motion.div>
+        </RevealStagger>
       </div>
     </section>
   );
