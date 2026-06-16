@@ -10,7 +10,6 @@ import { z } from 'zod';
 import { Reveal } from '@/components/motion/Reveal';
 import { RevealStagger } from '@/components/motion/RevealStagger';
 import { staggerItem } from '@/lib/motion';
-import { supabase } from '@/integrations/supabase/client';
 import {
   Select,
   SelectContent,
@@ -44,6 +43,8 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
+const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/rayancooper909@gmail.com';
+
 export function ContactSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -57,10 +58,6 @@ export function ContactSection() {
   });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined;
-  const formSubmitEndpoint =
-    (import.meta.env.VITE_FORMSUBMIT_ENDPOINT as string | undefined) ??
-    'https://formsubmit.co/ajax/rayancooper909@gmail.com';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -83,66 +80,23 @@ export function ContactSection() {
       const validatedData = contactSchema.parse(formData);
       setIsSubmitting(true);
 
-      let submitted = false;
-
-      // Prefer Formspree when configured.
-      if (formspreeEndpoint) {
-        const response = await fetch(formspreeEndpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            name: validatedData.name,
-            email: validatedData.email,
-            service: validatedData.service,
-            message: validatedData.message,
-            _subject: `Website Inquiry: ${validatedData.service}`,
-          }),
-        });
-
-        if (response.ok) {
-          submitted = true;
-        }
-      }
-
-      // If Formspree is not configured, send directly to inbox via FormSubmit.
-      if (!submitted && !formspreeEndpoint && formSubmitEndpoint) {
-        const response = await fetch(formSubmitEndpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            name: validatedData.name,
-            email: validatedData.email,
-            service: validatedData.service,
-            message: validatedData.message,
-            _subject: `Website Inquiry: ${validatedData.service}`,
-            _captcha: 'false',
-          }),
-        });
-
-        if (response.ok) {
-          submitted = true;
-        }
-      }
-
-      // Final fallback: store lead in Supabase if email delivery is unavailable.
-      if (!submitted) {
-        const { error } = await supabase.from('contact_submissions').insert({
+      const response = await fetch(FORMSUBMIT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
           name: validatedData.name,
           email: validatedData.email,
-          message: `[Service: ${validatedData.service}] ${validatedData.message}`,
-          phone: null,
-        });
+          service: validatedData.service,
+          message: validatedData.message,
+          _subject: `Website Inquiry: ${validatedData.service}`,
+          _captcha: 'false',
+        }),
+      });
 
-        if (error) {
-          throw error;
-        }
-      }
+      if (!response.ok) throw new Error('Failed to send');
 
       toast({
         title: "Message sent!",
@@ -173,11 +127,9 @@ export function ContactSection() {
 
   return (
     <section id="contact-form" className="section-padding relative overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background to-muted/30" />
       
       <div className="container-custom relative z-10">
-        {/* Section Header */}
         <div ref={ref} className="text-center mb-12 md:mb-16">
           <Reveal
             as="span"
@@ -233,14 +185,11 @@ export function ContactSection() {
                 </div>
                 <div>
                   <h3 className="font-display font-semibold text-foreground mb-1 text-base">Location</h3>
-                  <p className="text-muted-foreground">
-                    Breaswood, Texas
-                  </p>
+                  <p className="text-muted-foreground">Breaswood, Texas</p>
                 </div>
               </div>
             </div>
 
-            {/* Hours */}
             <div className="card-shade p-5 sm:p-6">
               <h3 className="font-display font-semibold text-foreground mb-3 text-base">Business Hours</h3>
               <div className="space-y-2 text-sm text-muted-foreground">
@@ -275,9 +224,7 @@ export function ContactSection() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="John Doe"
-                    className={`bg-background border-foreground/20 placeholder:text-foreground/45 focus-visible:ring-primary/35 ${
-                      errors.name ? 'border-destructive' : ''
-                    }`}
+                    className={`bg-background border-foreground/20 placeholder:text-foreground/45 focus-visible:ring-primary/35 ${errors.name ? 'border-destructive' : ''}`}
                   />
                   {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
                 </div>
@@ -290,9 +237,7 @@ export function ContactSection() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="john@example.com"
-                    className={`bg-background border-foreground/20 placeholder:text-foreground/45 focus-visible:ring-primary/35 ${
-                      errors.email ? 'border-destructive' : ''
-                    }`}
+                    className={`bg-background border-foreground/20 placeholder:text-foreground/45 focus-visible:ring-primary/35 ${errors.email ? 'border-destructive' : ''}`}
                   />
                   {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
                 </div>
@@ -301,18 +246,12 @@ export function ContactSection() {
               <div className="space-y-2">
                 <Label className="text-foreground font-medium">Service *</Label>
                 <Select value={formData.service} onValueChange={handleServiceChange}>
-                  <SelectTrigger
-                    className={`bg-background border-foreground/20 text-foreground focus:ring-primary/35 ${
-                      errors.service ? 'border-destructive' : ''
-                    }`}
-                  >
+                  <SelectTrigger className={`bg-background border-foreground/20 text-foreground focus:ring-primary/35 ${errors.service ? 'border-destructive' : ''}`}>
                     <SelectValue placeholder="Select a service" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-foreground/15">
                     {serviceOptions.map((option) => (
-                      <SelectItem key={option} value={option}>
-                        {option}
-                      </SelectItem>
+                      <SelectItem key={option} value={option}>{option}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -328,17 +267,15 @@ export function ContactSection() {
                   onChange={handleChange}
                   placeholder="Tell us about your project..."
                   rows={5}
-                  className={`bg-background border-foreground/20 placeholder:text-foreground/45 focus-visible:ring-primary/35 ${
-                    errors.message ? 'border-destructive' : ''
-                  }`}
+                  className={`bg-background border-foreground/20 placeholder:text-foreground/45 focus-visible:ring-primary/35 ${errors.message ? 'border-destructive' : ''}`}
                 />
                 {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
               </div>
 
-              <Button 
-                type="submit" 
-                variant="gold" 
-                size="lg" 
+              <Button
+                type="submit"
+                variant="gold"
+                size="lg"
                 className="w-full group"
                 disabled={isSubmitting}
               >

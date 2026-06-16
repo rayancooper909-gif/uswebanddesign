@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CalendarCheck, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 
 const services = [
   'Web Development',
@@ -59,37 +58,21 @@ export function BookingForm({
     setLoading(true);
 
     try {
-      let delivered = false;
-
-      // Primary: send email via FormSubmit
-      try {
-        const res = await fetch(FORMSUBMIT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            name: form.name,
-            email: form.email,
-            phone: form.phone || 'Not provided',
-            service: form.service,
-            message: form.message || 'No message provided',
-            _subject: `New Booking Request: ${form.service} — ${form.name}`,
-            _captcha: 'false',
-          }),
-        });
-        if (res.ok) delivered = true;
-      } catch {
-        // fall through to Supabase
-      }
-
-      // Fallback: save to Supabase so no lead is ever lost
-      if (!delivered) {
-        await supabase.from('contact_submissions').insert({
+      const res = await fetch(FORMSUBMIT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
           name: form.name,
           email: form.email,
-          phone: form.phone || null,
-          message: `[Booking — ${form.service}] ${form.message}`,
-        });
-      }
+          phone: form.phone || 'Not provided',
+          service: form.service,
+          message: form.message || 'No message provided',
+          _subject: `New Booking Request: ${form.service} — ${form.name}`,
+          _captcha: 'false',
+        }),
+      });
+
+      if (!res.ok) throw new Error('Failed to send');
 
       toast({
         title: "Booking request received!",
@@ -97,7 +80,7 @@ export function BookingForm({
       });
 
       setForm({ name: '', email: '', phone: '', service: '', message: '' });
-    } catch (err) {
+    } catch {
       toast({ title: 'Something went wrong. Please try again.', variant: 'destructive' });
     } finally {
       setLoading(false);
