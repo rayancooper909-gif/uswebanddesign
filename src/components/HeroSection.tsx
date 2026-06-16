@@ -166,7 +166,7 @@ export function HeroSection() {
             <motion.div
               className="absolute left-[-12%] top-[2%] h-[88%] w-[124%] rotate-[-2deg] opacity-[0.62] md:left-[-18%] md:top-[-14%] md:h-[128%] md:w-[64%] md:rotate-[-6deg] md:opacity-[0.85]"
               animate={isMobile ? undefined : { y: [0, -220, 0, 220, 0] }}
-              transition={isMobile ? undefined : { duration: 120, repeat: Infinity, ease: 'linear' }}
+              transition={isMobile ? undefined : { duration: 300, repeat: Infinity, ease: 'linear' }}
               aria-hidden="true"
             >
               <div className="grid grid-cols-3 gap-2 md:gap-3" style={{ filter: 'blur(3px)' }}>
@@ -181,7 +181,7 @@ export function HeroSection() {
             <motion.div
               className="hidden md:block absolute -right-[18%] top-[-16%] h-[132%] w-[64%] rotate-[6deg] opacity-[0.85]"
               animate={{ y: [0, 220, 0, -220, 0] }}
-              transition={{ duration: 120, repeat: Infinity, ease: 'linear' }}
+              transition={{ duration: 300, repeat: Infinity, ease: 'linear' }}
               aria-hidden="true"
             >
               <div className="grid grid-cols-3 gap-3" style={{ filter: 'blur(3px)' }}>
