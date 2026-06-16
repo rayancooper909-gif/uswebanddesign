@@ -10,9 +10,16 @@ const Footer = lazy(() => import('@/components/Footer').then(m => ({ default: m.
 
 const categoryColors: Record<string, string> = {
   'Web Strategy': 'bg-blue-50 text-blue-700 border-blue-200',
-  'SEO': 'bg-green-50 text-green-700 border-green-200',
-  'Web Design': 'bg-purple-50 text-purple-700 border-purple-200',
-  'Branding': 'bg-orange-50 text-orange-700 border-orange-200',
+  'SEO':          'bg-green-50 text-green-700 border-green-200',
+  'Web Design':   'bg-purple-50 text-purple-700 border-purple-200',
+  'Branding':     'bg-orange-50 text-orange-700 border-orange-200',
+};
+
+const categoryGradients: Record<string, string> = {
+  'Web Strategy': 'from-blue-100 to-blue-200',
+  'SEO':          'from-green-100 to-green-200',
+  'Web Design':   'from-purple-100 to-purple-200',
+  'Branding':     'from-orange-100 to-orange-200',
 };
 
 export default function BlogPage() {
@@ -51,8 +58,20 @@ export default function BlogPage() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="premium-panel rounded-3xl overflow-hidden flex flex-col group"
               >
-                {/* Category color bar */}
-                <div className="h-1.5 bg-primary w-full" />
+                {/* Cover image or gradient placeholder */}
+                <Link to={`/blog/${post.slug}`} className="block overflow-hidden">
+                  {post.image ? (
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className={`w-full h-44 bg-gradient-to-br ${categoryGradients[post.category] ?? 'from-secondary to-muted'} flex items-center justify-center group-hover:scale-105 transition-transform duration-500`}>
+                      <span className="text-4xl opacity-30 select-none">✍️</span>
+                    </div>
+                  )}
+                </Link>
 
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex items-center gap-2 mb-4">

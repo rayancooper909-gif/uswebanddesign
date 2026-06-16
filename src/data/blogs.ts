@@ -27,11 +27,12 @@
 //    date:     'June 16, 2026',
 //    category: 'Web Design',
 //    readTime: '4 min read',
+//    image:    '/blog-images/my-new-post-title.jpg',   ← OPTIONAL: delete line if no image
 //    content: `
 //
 // ## First Heading
 //
-// Write your article here. Just plain sentences like you would in Word.
+// Write your article here like you would in Word.
 //
 // ## Another Heading
 //
@@ -48,6 +49,13 @@
 //  export default post;
 //
 // ╠══════════════════════════════════════════════════════════════════════════╣
+// ║  HOW TO ADD AN IMAGE                                                    ║
+// ║  1. Upload your image to GitHub: go to public/blog-images/ →           ║
+// ║     click "Add file" → "Upload files" → drag your image in             ║
+// ║  2. Name the image the same as your slug, e.g: my-post-title.jpg       ║
+// ║  3. Set image: '/blog-images/my-post-title.jpg' in your post file      ║
+// ║  Best image size: 1200 x 630 pixels, JPG format, under 300KB           ║
+// ╠══════════════════════════════════════════════════════════════════════════╣
 // ║  CATEGORIES you can use:                                                ║
 // ║  'Web Design'  |  'SEO'  |  'Web Strategy'  |  'Branding'              ║
 // ╚══════════════════════════════════════════════════════════════════════════╝
@@ -60,6 +68,7 @@ export interface BlogPost {
   category: string;
   readTime: string;
   content: string;
+  image?: string;   // optional — path like /blog-images/my-post.jpg
   author?: string;
 }
 
