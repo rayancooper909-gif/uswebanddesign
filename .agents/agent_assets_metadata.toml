@@ -12,3 +12,9 @@ id = "jbGM7NsKIKcIaEUi6qy1H"
 uri = "file://github-upload.tar.gz"
 type = "unspecified"
 title = "GitHub Upload Package (38MB — source code only)"
+
+[[outputs]]
+id = "jLIg-jyohcDgL8wUb0bLh"
+uri = "file://dist.zip"
+type = "unspecified"
+title = "dist.zip — Netlify ready build"
