@@ -7,7 +7,6 @@ import { HeroSection } from '@/components/HeroSection';
 const AboutSection = lazy(() => import('@/components/AboutSection').then(m => ({ default: m.AboutSection })));
 const ProfessionalSolutionsSection = lazy(() => import('@/components/ProfessionalSolutionsSection').then(m => ({ default: m.ProfessionalSolutionsSection })));
 const ServicesSection = lazy(() => import('@/components/ServicesSection').then(m => ({ default: m.ServicesSection })));
-const InteractiveExperienceSection = lazy(() => import('@/components/InteractiveExperienceSection').then(m => ({ default: m.InteractiveExperienceSection })));
 const PricingSection = lazy(() => import('@/components/PricingSection').then(m => ({ default: m.PricingSection })));
 const PortfolioSection = lazy(() => import('@/components/PortfolioSection').then(m => ({ default: m.PortfolioSection })));
 const FAQSection = lazy(() => import('@/components/FAQSection').then(m => ({ default: m.FAQSection })));
@@ -33,8 +32,6 @@ const Index = () => {
       <main>
         <HeroSection />
         <Suspense fallback={<div className="min-h-[200px]" />}>
-          <InteractiveExperienceSection />
-          <SectionDivider />
           <AboutSection />
           <SectionDivider />
           <ProfessionalSolutionsSection />
