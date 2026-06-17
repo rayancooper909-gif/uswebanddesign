@@ -166,7 +166,6 @@ export function HeroSection() {
         </video>
       </div>
 
-
       <div className="container-custom relative z-10 my-4 w-full">
         <div className="max-w-5xl mx-auto text-center">
           {/* Tagline */}
