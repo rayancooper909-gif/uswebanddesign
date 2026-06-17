@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-//  HOW TO ADD A BLOG POST  —  3 steps, takes about 3 minutes
+//  HOW TO ADD A BLOG POST  —  3 steps, takes about 2 minutes
 // ═══════════════════════════════════════════════════════════════════
 //
 //  STEP 1 — Copy this block and paste it right after the line below
@@ -56,6 +56,7 @@ export const blogPosts: BlogPost[] = [
     date:  'June 10, 2025',
     category: 'Web Strategy',
     readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&q=80&auto=format&fit=crop',
     excerpt: 'Your website should be your best salesperson. Here are the exact changes that turn visitors into leads — without spending more on ads.',
     content: `
 ## The Problem Most Business Websites Have
@@ -100,6 +101,7 @@ At **US Web and Design**, every website we build is conversion-optimized from da
     date:  'May 28, 2025',
     category: 'SEO',
     readTime: '5 min read',
+    image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80&auto=format&fit=crop',
     excerpt: 'Paid ads stop the moment you stop paying. Local SEO builds a traffic asset that works for you 24/7 — here is how to start.',
     content: `
 ## What Is Local SEO and Why Does It Matter?
@@ -138,6 +140,7 @@ We build local SEO foundations into every website we launch. [Book a free strate
     date:  'May 14, 2025',
     category: 'Web Design',
     readTime: '4 min read',
+    image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80&auto=format&fit=crop',
     excerpt: 'It is not about having the fanciest animations. Here are the real design decisions that separate amateur sites from ones that win clients.',
     content: `
 ## The Gap Between "Nice-Looking" and "Professional"
