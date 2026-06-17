@@ -1,18 +1,10 @@
 import { motion } from 'framer-motion';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { KineticTicker } from '@/components/KineticTicker';
 
 type ReviewBrand = 'Google Reviews' | 'Yelp' | 'Trustpilot';
-
-const heroImgModules = import.meta.glob('../assets/hero/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP}', {
-  eager: true,
-  import: 'default',
-});
-
-const heroImages = Object.values(heroImgModules) as string[];
 
 function useCountUp(end: number, duration: number = 1200, start: boolean = false) {
   const [count, setCount] = useState(0);
@@ -79,7 +71,6 @@ function BrandMark({ brand }: { brand: ReviewBrand }) {
     );
   }
 
-  // Trustpilot
   return (
     <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
       <path
@@ -98,7 +89,7 @@ function BrandMark({ brand }: { brand: ReviewBrand }) {
 function starsColor(brand: ReviewBrand): string {
   if (brand === 'Yelp') return '#D32323';
   if (brand === 'Trustpilot') return '#00B67A';
-  return '#F4B400'; // Google-ish yellow
+  return '#F4B400';
 }
 
 function Stars({ value, color }: { value: number; color: string }) {
@@ -150,116 +141,79 @@ function SocialBadge({
 }
 
 export function HeroSection() {
-  const isMobile = useIsMobile();
-  const tiles = useMemo(() => {
-    if (!heroImages.length) return [] as string[];
-    if (isMobile) return heroImages.slice(0, 12) as string[];
-    return [...heroImages, ...heroImages] as string[];
-  }, [isMobile]);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.5;
+    }
+  }, []);
 
   return (
     <section id="home" className="relative flex min-h-[88svh] md:min-h-screen items-center justify-center overflow-hidden pt-24">
-      {/* Collage background (patch-wall style) */}
+      {/* Video background */}
       <div className="absolute inset-0 overflow-hidden">
-        {tiles.length > 0 ? (
-          <>
-            <motion.div
-              className="absolute left-[-12%] top-[2%] h-[88%] w-[124%] rotate-[-2deg] opacity-[0.62] md:left-[-18%] md:top-[-14%] md:h-[128%] md:w-[64%] md:rotate-[-6deg] md:opacity-[0.85]"
-              animate={isMobile ? undefined : { y: [0, -220, 0, 220, 0] }}
-              transition={isMobile ? undefined : { duration: 300, repeat: Infinity, ease: 'linear' }}
-              aria-hidden="true"
-            >
-              <div className="grid grid-cols-3 gap-2 md:gap-3" style={{ filter: 'blur(3px)' }}>
-                {tiles.map((src, i) => (
-                  <div key={`l-${i}`} className="overflow-hidden rounded-2xl border border-white/10 bg-black/10 shadow-[0_10px_30px_-20px_rgba(0,0,0,0.6)]">
-                    <img src={src} alt="" className="h-full w-full aspect-square object-cover" loading="lazy" />
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="hidden md:block absolute -right-[18%] top-[-16%] h-[132%] w-[64%] rotate-[6deg] opacity-[0.85]"
-              animate={{ y: [0, 220, 0, -220, 0] }}
-              transition={{ duration: 300, repeat: Infinity, ease: 'linear' }}
-              aria-hidden="true"
-            >
-              <div className="grid grid-cols-3 gap-3" style={{ filter: 'blur(3px)' }}>
-                {tiles.map((src, i) => (
-                  <div key={`r-${i}`} className="overflow-hidden rounded-2xl border border-white/10 bg-black/10 shadow-[0_10px_30px_-20px_rgba(0,0,0,0.6)]">
-                    <img src={src} alt="" className="h-full w-full aspect-square object-cover" loading="lazy" />
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </>
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-light-gray/30" aria-hidden="true" />
-        )}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+          aria-hidden="true"
+        >
+          <source src="/hero-bg.mp4" type="video/mp4" />
+        </video>
       </div>
+
+      {/* Overlays */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/92 via-background/89 to-background/95 md:from-background/90 md:via-background/87 md:to-background/94" />
       <div className="absolute inset-0 bg-background/76 md:bg-background/68" />
 
       <div className="container-custom relative z-10 my-4 w-full">
         <div className="max-w-5xl mx-auto text-center">
           {/* Tagline */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6,
-          delay: 0.2
-        }} className="mb-5 sm:mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mb-5 sm:mb-6"
+          >
             <span className="inline-block rounded-full border border-border bg-secondary px-4 py-2 text-xs font-medium text-foreground/80 sm:text-sm">
               Full-Service Digital Agency
             </span>
           </motion.div>
 
           {/* Main Headline */}
-          <motion.h1 initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6,
-          delay: 0.3
-        }} className="mb-5 text-4xl font-display font-bold leading-[1.02] tracking-tight sm:text-5xl md:mb-6 md:text-5xl lg:text-6xl xl:text-7xl [text-shadow:0_2px_12px_rgba(0,0,0,0.35)]">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mb-5 text-4xl font-display font-bold leading-[1.02] tracking-tight sm:text-5xl md:mb-6 md:text-5xl lg:text-6xl xl:text-7xl [text-shadow:0_2px_12px_rgba(0,0,0,0.35)]"
+          >
             Premium Websites That
             <br />
             <span className="text-primary">Convert</span> and Scale
           </motion.h1>
 
           {/* Subheadline */}
-          <motion.p initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6,
-          delay: 0.4
-        }} className="mx-auto mb-8 max-w-2xl rounded-xl border border-white/25 bg-background/55 backdrop-blur-md px-4 py-3 text-base leading-relaxed text-foreground sm:text-lg md:mb-10 md:text-xl [text-shadow:0_2px_10px_rgba(0,0,0,0.28)] shadow-lg">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mx-auto mb-8 max-w-2xl rounded-xl border border-white/25 bg-background/55 backdrop-blur-md px-4 py-3 text-base leading-relaxed text-foreground sm:text-lg md:mb-10 md:text-xl [text-shadow:0_2px_10px_rgba(0,0,0,0.28)] shadow-lg"
+          >
             Web design, branding, and marketing systems built to attract attention and turn it into leads.
             Launch with confidence, backed by strategy, clean builds, and ongoing support.
           </motion.p>
 
           {/* CTA Buttons */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6,
-          delay: 0.5
-        }} className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4"
+          >
             <Button variant="gold" size="xl" className="group w-full sm:w-auto" asChild>
               <a href="#pricing">
                 Get Pricing
@@ -268,8 +222,8 @@ export function HeroSection() {
             </Button>
             <Button variant="outline" size="xl" className="group w-full sm:w-auto" asChild>
               <a href="#portfolio">
-              <Play className="w-4 h-4" />
-              View Portfolio
+                <Play className="w-4 h-4" />
+                View Portfolio
               </a>
             </Button>
           </motion.div>
