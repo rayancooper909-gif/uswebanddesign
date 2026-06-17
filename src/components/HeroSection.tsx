@@ -159,7 +159,7 @@ export function HeroSection() {
           muted
           loop
           playsInline
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover opacity-70"
           aria-hidden="true"
         >
           <source src="/hero-bg.mp4" type="video/mp4" />
