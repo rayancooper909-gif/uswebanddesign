@@ -47,7 +47,7 @@ export function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-      className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 md:px-8 py-3 sm:py-4 my-[2px]"
+      className="sticky top-0 z-50 px-3 sm:px-4 md:px-8 py-3 sm:py-4 my-[2px]"
     >
       <nav className={`container-custom mx-auto flex items-center justify-between rounded-3xl px-4 sm:px-6 py-3 transition-all duration-300 premium-panel ${isScrolled ? 'bg-background/95 shadow-xl' : 'bg-background/80'}`}>
         {/* Logo */}
