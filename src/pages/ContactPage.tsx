@@ -52,6 +52,21 @@ export default function ContactPage() {
         </motion.div>
       </section>
 
+      {/* Image strip */}
+      <section className="relative h-56 md:h-72 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1400&q=80&auto=format&fit=crop"
+          alt="Team ready to help"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-background/65 flex items-center justify-center">
+          <div className="text-center px-4">
+            <p className="text-xl md:text-2xl font-display font-bold text-foreground">We're Here When You Need Us</p>
+            <p className="text-foreground/65 mt-1 text-sm md:text-base">Response within 24 hours — usually much faster</p>
+          </div>
+        </div>
+      </section>
+
       {/* Contact details */}
       <section className="py-10 border-y border-border bg-secondary/30">
         <div className="container-custom grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
