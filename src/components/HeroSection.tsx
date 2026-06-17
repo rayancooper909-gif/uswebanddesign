@@ -159,7 +159,7 @@ export function HeroSection() {
           muted
           loop
           playsInline
-          className="absolute inset-0 h-full w-full object-cover opacity-70"
+          className="absolute inset-0 h-full w-full object-cover opacity-20"
           aria-hidden="true"
         >
           <source src="/hero-bg.mp4" type="video/mp4" />
@@ -201,7 +201,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mx-auto mb-8 max-w-2xl rounded-xl border border-white/15 bg-background/25 backdrop-blur-sm px-4 py-3 text-base leading-relaxed text-foreground sm:text-lg md:mb-10 md:text-xl [text-shadow:0_2px_10px_rgba(0,0,0,0.28)] shadow-lg"
+            className="mx-auto mb-8 max-w-2xl rounded-xl border border-white/10 bg-background/5 backdrop-blur-sm px-4 py-3 text-base leading-relaxed text-foreground sm:text-lg md:mb-10 md:text-xl [text-shadow:0_2px_10px_rgba(0,0,0,0.28)] shadow-lg"
           >
             Web design, branding, and marketing systems built to attract attention and turn it into leads.
             Launch with confidence, backed by strategy, clean builds, and ongoing support.
