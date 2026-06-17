@@ -13,15 +13,12 @@ import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import LocationPage from "./pages/LocationPage";
 import NotFound from "./pages/NotFound";
-import { SiteProgressBar } from "@/components/SiteProgressBar";
-
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <div className="app-shell">
-        <SiteProgressBar />
         <Toaster />
         <Sonner />
         <BrowserRouter>
