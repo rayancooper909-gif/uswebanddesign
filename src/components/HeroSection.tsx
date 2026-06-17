@@ -167,8 +167,8 @@ export function HeroSection() {
       </div>
 
       {/* Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/92 via-background/89 to-background/95 md:from-background/90 md:via-background/87 md:to-background/94" />
-      <div className="absolute inset-0 bg-background/76 md:bg-background/68" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/30 to-background/50 md:from-background/35 md:via-background/25 md:to-background/45" />
+      <div className="absolute inset-0 bg-background/20 md:bg-background/15" />
 
       <div className="container-custom relative z-10 my-4 w-full">
         <div className="max-w-5xl mx-auto text-center">
