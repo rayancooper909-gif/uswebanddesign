@@ -1,9 +1,11 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
@@ -58,6 +60,8 @@ export function ContactSection() {
   });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [optIn, setOptIn] = useState(false);
+  const [optInError, setOptInError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -75,6 +79,11 @@ export function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
+
+    if (!optIn) {
+      setOptInError(true);
+      return;
+    }
 
     try {
       const validatedData = contactSchema.parse(formData);
@@ -270,6 +279,26 @@ export function ContactSection() {
                   className={`bg-background border-foreground/20 placeholder:text-foreground/45 focus-visible:ring-primary/35 ${errors.message ? 'border-destructive' : ''}`}
                 />
                 {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-start gap-3">
+                  <Checkbox
+                    id="cs-opt-in"
+                    checked={optIn}
+                    onCheckedChange={(checked) => {
+                      setOptIn(!!checked);
+                      if (checked) setOptInError(false);
+                    }}
+                    className="mt-0.5 shrink-0"
+                  />
+                  <label htmlFor="cs-opt-in" className="text-xs text-foreground/70 leading-relaxed cursor-pointer">
+                    I agree to receive communications by text messages regarding updates on project status, meeting reminders, marketing, and general communication related to the projects from US Web and Design about my inquiry. You may opt out by replying STOP or reply HELP for more information. Message frequency varies. Message and data rates may apply. You may review our{' '}
+                    <Link to="/privacy-policy" className="text-primary underline hover:text-primary/80">Privacy Policy</Link>{' '}
+                    to learn how your data is used.
+                  </label>
+                </div>
+                {optInError && <p className="text-sm text-destructive">Please agree to receive communications to proceed.</p>}
               </div>
 
               <Button
