@@ -36,6 +36,23 @@ export default function ServicesPage() {
         </motion.div>
       </section>
 
+      {/* Image strip */}
+      <section className="relative h-56 md:h-72 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&q=80&auto=format&fit=crop"
+          alt="Digital marketing and web design workspace"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-background/65 flex items-center justify-center">
+          <div className="text-center px-4">
+            <p className="text-xl md:text-2xl font-display font-bold text-foreground">
+              Strategy. Design. Results.
+            </p>
+            <p className="text-foreground/65 mt-1 text-sm md:text-base">Every service is built to grow your business online</p>
+          </div>
+        </div>
+      </section>
+
       {/* Existing Services section */}
       <ServicesSection />
 
