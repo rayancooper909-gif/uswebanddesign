@@ -59,24 +59,59 @@ export default function AboutPage() {
 
       {/* Our story */}
       <section className="py-20 bg-secondary/20">
-        <div className="container-custom max-w-3xl mx-auto text-center space-y-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight mb-5">Our Story</h2>
-            <p className="text-foreground/65 text-base md:text-lg leading-relaxed mb-4">
-              We started US Web and Design because we saw too many small and medium businesses get left behind — stuck with outdated sites, unclear branding, and agencies that over-promised and underdelivered.
+        <div className="container-custom max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight mb-5">Our Story</h2>
+              <p className="text-foreground/65 text-base md:text-lg leading-relaxed mb-4">
+                We started US Web and Design because we saw too many small and medium businesses get left behind — stuck with outdated sites, unclear branding, and agencies that over-promised and underdelivered.
+              </p>
+              <p className="text-foreground/65 text-base md:text-lg leading-relaxed mb-4">
+                Our approach is different. We treat every client like a partner. We listen first, build second, and stay with you long after launch to make sure your investment keeps paying off.
+              </p>
+              <p className="text-foreground/65 text-base md:text-lg leading-relaxed">
+                From solo entrepreneurs to established brands, we've helped hundreds of businesses look their best online and turn clicks into customers.
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="relative"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80&auto=format&fit=crop"
+                alt="US Web and Design team collaborating"
+                className="rounded-3xl w-full h-80 md:h-96 object-cover shadow-2xl"
+              />
+              <div className="absolute -bottom-4 -left-4 bg-primary text-primary-foreground rounded-2xl px-5 py-3 text-sm font-semibold shadow-lg">
+                200+ Happy Clients
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Visual strip */}
+      <section className="relative h-64 md:h-80 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&q=80&auto=format&fit=crop"
+          alt="Modern agency workspace"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
+          <div className="text-center px-4">
+            <p className="text-2xl md:text-3xl font-display font-bold text-foreground">
+              Built on Trust. Proven by Results.
             </p>
-            <p className="text-foreground/65 text-base md:text-lg leading-relaxed mb-4">
-              Our approach is different. We treat every client like a partner. We listen first, build second, and stay with you long after launch to make sure your investment keeps paying off.
-            </p>
-            <p className="text-foreground/65 text-base md:text-lg leading-relaxed">
-              From solo entrepreneurs to established brands, we've helped hundreds of businesses look their best online and turn clicks into customers.
-            </p>
-          </motion.div>
+            <p className="text-foreground/70 mt-2 text-base md:text-lg">5+ years serving businesses across the US</p>
+          </div>
         </div>
       </section>
 
