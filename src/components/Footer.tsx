@@ -1,4 +1,5 @@
 import { Mail, Phone, Instagram, Facebook } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const footerLinks = {
   company: [
@@ -13,8 +14,8 @@ const footerLinks = {
     { name: 'SEO & Marketing', href: '#services' },
   ],
   legal: [
-    { name: 'Privacy Policy', href: '#' },
-    { name: 'Terms of Service', href: '#' },
+    { name: 'Privacy Policy', href: '/privacy-policy' },
+    { name: 'Terms of Service', href: '/terms' },
   ],
 };
 
@@ -42,17 +43,17 @@ export function Footer() {
             </div>
             {/* Social Links */}
             <div className="flex items-center gap-3 mt-4">
-              <a 
-                href="https://instagram.com/bolddigitizing" 
-                target="_blank" 
+              <a
+                href="https://instagram.com/bolddigitizing"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-lg bg-background/10 flex items-center justify-center hover:bg-primary/20 transition-colors"
               >
                 <Instagram className="w-4 h-4 text-background/60 hover:text-primary" />
               </a>
-              <a 
-                href="https://facebook.com/bolddigitizing" 
-                target="_blank" 
+              <a
+                href="https://facebook.com/bolddigitizing"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-lg bg-background/10 flex items-center justify-center hover:bg-primary/20 transition-colors"
               >
@@ -67,10 +68,7 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-background/60 hover:text-primary transition-colors"
-                  >
+                  <a href={link.href} className="text-sm text-background/60 hover:text-primary transition-colors">
                     {link.name}
                   </a>
                 </li>
@@ -84,10 +82,7 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-background/60 hover:text-primary transition-colors"
-                  >
+                  <a href={link.href} className="text-sm text-background/60 hover:text-primary transition-colors">
                     {link.name}
                   </a>
                 </li>
@@ -101,12 +96,9 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-background/60 hover:text-primary transition-colors"
-                  >
+                  <Link to={link.href} className="text-sm text-background/60 hover:text-primary transition-colors">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -116,15 +108,15 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-12 md:mt-16 pt-6 md:pt-8 border-t border-background/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-background/60">
-            © {new Date().getFullYear()} Bolddigitizing. All rights reserved.
+            © {new Date().getFullYear()} US Web and Design. All rights reserved.
           </p>
           <div className="flex items-center gap-4 md:gap-6">
-            <a href="#" className="text-sm text-background/60 hover:text-primary transition-colors">
+            <Link to="/privacy-policy" className="text-sm text-background/60 hover:text-primary transition-colors">
               Privacy
-            </a>
-            <a href="#" className="text-sm text-background/60 hover:text-primary transition-colors">
+            </Link>
+            <Link to="/terms" className="text-sm text-background/60 hover:text-primary transition-colors">
               Terms
-            </a>
+            </Link>
           </div>
         </div>
       </div>
