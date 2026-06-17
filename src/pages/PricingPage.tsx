@@ -48,6 +48,21 @@ export default function PricingPage() {
       {/* Existing Pricing section */}
       <PricingSection />
 
+      {/* Image strip */}
+      <section className="relative h-56 md:h-72 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1400&q=80&auto=format&fit=crop"
+          alt="Transparent and honest pricing"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-background/65 flex items-center justify-center">
+          <div className="text-center px-4">
+            <p className="text-xl md:text-2xl font-display font-bold text-foreground">No Surprises. Just Results.</p>
+            <p className="text-foreground/65 mt-1 text-sm md:text-base">Every dollar you invest is tracked and reported</p>
+          </div>
+        </div>
+      </section>
+
       {/* Guarantees */}
       <section className="py-20 bg-secondary/20">
         <div className="container-custom max-w-5xl mx-auto">
