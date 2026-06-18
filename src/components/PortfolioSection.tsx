@@ -1,13 +1,12 @@
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Reveal } from '@/components/motion/Reveal';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
-const categories = ['Website', 'Logo', 'Branding'];
+const categories = ['Website', 'Logo', 'Branding'] as const;
 
-type Category = 'Website' | 'Logo' | 'Branding';
+type Category = (typeof categories)[number];
 
 const embroideryImgs = import.meta.glob(
   '../assets/portfolio/embroidery/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP}',
@@ -36,7 +35,7 @@ function toItems(
   category: Category,
   startId: number
 ): Array<{ id: number; title: string; category: Category; image: string }> {
-  const entries = Object.entries(map).sort(([a], [b]) => a.localeCompare(b));
+  const entries = Object.entries(map).sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }));
 
   return entries.map(([path, src], i) => {
     const filename = path.split('/').pop() ?? path;
@@ -53,9 +52,10 @@ function toItems(
       /^img\s*\d+$/i.test(rawTitle.replace(/^IMG-/i, 'img ')) ||
       /^img\s*\d+$/i.test(rawTitle.replace(/^IMG/i, 'img').replace(/\s+/g, ' ')) ||
       /^img\s*\d+$/i.test(rawTitle.replace(/^IMG/i, 'img').replace(/_/g, ' ')) ||
-      /^asset\s*\d+$/i.test(rawTitle);
+      /^asset\s*\d+$/i.test(rawTitle) ||
+      /^port\s*\d+/i.test(rawTitle);
 
-    const title = hideTitle ? '' : rawTitle;
+    const title = hideTitle ? `${category} ${i + 1}` : rawTitle;
 
     return {
       id: startId + i,
@@ -120,56 +120,46 @@ export function PortfolioSection({ limit, seeMoreTo = '/portfolio' }: PortfolioS
       : filteredItems;
   const hasMore = typeof limit === 'number' && filteredItems.length > limit;
 
+  const openItem = (item: (typeof portfolioItems)[number]) => {
+    setSelectedItem(item);
+    setLightboxOpen(true);
+  };
+
   return (
-    <section id="portfolio" className="section-padding relative overflow-hidden">
+    <section id="portfolio" className="section-padding section-blue-depth relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-light-gray/50 via-background to-light-gray/30" />
+      <div className="section-blue-layer absolute inset-0" />
       
       <div className="container-custom relative z-10">
         <Dialog
           open={lightboxOpen}
           onOpenChange={(open) => {
             setLightboxOpen(open);
-            if (!open) setSelectedItem(null);
+            if (!open) {
+              setSelectedItem(null);
+            }
           }}
         >
           <DialogContent
-            className="max-w-[96vw] sm:max-w-[92vw] md:max-w-[1100px] p-0 overflow-hidden bg-background/95 backdrop-blur-md"
+            className="max-w-[96vw] sm:max-w-[94vw] md:max-w-[1180px] max-h-[92vh] p-0 overflow-hidden border-border/70 bg-[#05070a]"
             aria-label="Portfolio image preview"
           >
             {selectedItem && (
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-gold-light/10 opacity-60" />
+              <div className="relative flex max-h-[92vh] items-center justify-center overflow-auto bg-[#05070a] p-2 sm:p-4">
+                <DialogTitle className="sr-only">
+                  {selectedItem.title || `${selectedItem.category} portfolio image`}
+                </DialogTitle>
+                <DialogDescription className="sr-only">
+                  Full-size portfolio preview for the selected image.
+                </DialogDescription>
+
                 <img
                   src={selectedItem.image}
                   alt={selectedItem.title || `${selectedItem.category} design`}
-                  className="relative z-10 block w-full max-h-[82vh] object-contain bg-muted/10"
+                  className="block max-h-[88vh] w-auto max-w-full select-none object-contain"
                   loading="eager"
+                  draggable={false}
                 />
-
-                <div className="relative z-10 border-t border-border/60 px-5 py-4 flex flex-wrap items-center justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="text-xs text-muted-foreground">Category</p>
-                    <p className="font-medium text-foreground">{selectedItem.category}</p>
-                  </div>
-                  {selectedItem.title ? (
-                    <div className="min-w-0 text-right">
-                      <p className="text-xs text-muted-foreground">Title</p>
-                      <p className="font-medium text-foreground truncate max-w-[52ch]">{selectedItem.title}</p>
-                    </div>
-                  ) : (
-                    <div className="min-w-0 text-right">
-                      <a
-                        href={selectedItem.image}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-sm font-medium text-primary hover:underline"
-                      >
-                        Open in new tab
-                      </a>
-                    </div>
-                  )}
-                </div>
               </div>
             )}
           </DialogContent>
@@ -189,7 +179,7 @@ export function PortfolioSection({ limit, seeMoreTo = '/portfolio' }: PortfolioS
             Our Recent Work
           </Reveal>
           <Reveal as="p" variant="up" delay={0.14} className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-            Explore a selection of websites, logos, and branding work crafted to help businesses stand out and convert.
+            Explore websites, logos, and branding work crafted with crisp detail and production-ready polish.
           </Reveal>
         </div>
 
@@ -209,7 +199,7 @@ export function PortfolioSection({ limit, seeMoreTo = '/portfolio' }: PortfolioS
               className={`min-h-10 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
                 activeCategory === category
                   ? 'bg-gradient-to-r from-foreground to-charcoal-light text-background shadow-lg'
-                  : 'bg-card text-muted-foreground hover:bg-foreground/10 border border-border'
+                  : 'bg-background text-[#102033] hover:bg-background/90 hover:text-[#102033] border border-background/30 shadow-sm'
               }`}
             >
               {category}
@@ -235,19 +225,15 @@ export function PortfolioSection({ limit, seeMoreTo = '/portfolio' }: PortfolioS
                 exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98, y: 8, transition: { duration: 0.15 } }}
                 whileHover={{ y: -8 }}
                 transition={reduceMotion ? { duration: 0 } : undefined}
-                className="group relative aspect-square cursor-pointer card-shade transition-colors duration-300"
+                className="group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-lg border border-border/70 bg-background p-3 shadow-sm transition-colors duration-300 hover:border-primary/40 hover:shadow-xl"
                 role="button"
                 tabIndex={0}
                 aria-label={`Open ${item.category} image`}
-                onClick={() => {
-                  setSelectedItem(item);
-                  setLightboxOpen(true);
-                }}
+                onClick={() => openItem(item)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    setSelectedItem(item);
-                    setLightboxOpen(true);
+                    openItem(item);
                   }
                 }}
               >
@@ -255,7 +241,11 @@ export function PortfolioSection({ limit, seeMoreTo = '/portfolio' }: PortfolioS
                 <motion.img
                   src={item.image}
                   alt={item.title}
-                  className="relative z-10 w-full h-full object-contain bg-muted/10"
+                  className={`relative z-10 h-full w-full bg-muted/10 ${
+                    item.category === 'Website'
+                      ? 'object-cover object-top'
+                      : 'rounded-md object-contain object-center'
+                  }`}
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
                 />
@@ -263,34 +253,8 @@ export function PortfolioSection({ limit, seeMoreTo = '/portfolio' }: PortfolioS
                 {/* Muted Overlay */}
                 <div className="absolute inset-0 bg-muted/0 group-hover:bg-muted/20 transition-colors duration-300" />
 
-                {/* Content Overlay */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300"
-                  initial={{ y: 20 }}
-                  whileHover={{ y: 0 }}
-                >
-                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-                    <motion.span
-                      className="inline-block px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-medium mb-3"
-                      initial={{ y: 6, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {item.category}
-                    </motion.span>
-                    {item.title && (
-                      <h3 className="text-background text-base sm:text-lg font-display font-semibold flex items-center gap-2">
-                        {item.title}
-                        <motion.div whileHover={{ rotate: 45, scale: 1.2 }} transition={{ duration: 0.2 }}>
-                          <ExternalLink className="w-4 h-4" />
-                        </motion.div>
-                      </h3>
-                    )}
-                  </div>
-                </motion.div>
-
                 {/* Border glow */}
-                <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-primary/20 transition-colors duration-300 pointer-events-none" />
+                <div className="pointer-events-none absolute inset-0 rounded-lg border-2 border-transparent transition-colors duration-300 group-hover:border-primary/20" />
               </motion.div>
             ))}
           </AnimatePresence>

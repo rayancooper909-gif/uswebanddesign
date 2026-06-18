@@ -198,10 +198,39 @@ export default function LocationPage() {
         </div>
       </section>
 
+      <section className="py-18 md:py-24 px-4">
+        <div className="container-custom max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-4">
+              <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Local SEO Content for {loc.city} Businesses</h2>
+              <p className="text-foreground/65 leading-relaxed">
+                This location page includes city and neighborhood language so it can better match searches like {loc.city} web design, {loc.city} SEO services, and local business website development. The goal is to make the page useful, specific, and easier for search engines to categorize.
+              </p>
+              <p className="text-foreground/65 leading-relaxed">
+                We also talk about nearby areas and service types to expand relevance without sounding repetitive. That helps create a stronger local footprint across the website.
+              </p>
+            </div>
+            <div className="premium-panel rounded-3xl p-6 space-y-3">
+              <h3 className="font-display font-semibold text-xl">Location Keywords</h3>
+              <ul className="space-y-2 text-foreground/70 text-sm leading-relaxed">
+                <li>• {loc.city} web design services</li>
+                <li>• Local SEO and Google Business Profile support</li>
+                <li>• Website redesigns for small businesses</li>
+                <li>• Lead generation and conversion pages</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div id="booking">
         <BookingForm
           heading={`Get a Free Quote for Your ${loc.city} Business`}
           subheading={`Tell us about your project and we'll send a custom proposal within 24 hours — no commitment required.`}
+          eyebrow={`${loc.city} SEO`}
+          contentTitle={`Local Web Design Content for ${loc.city}, ${loc.stateCode}`}
+          contentBody={`This page is built to help businesses in ${loc.city} find a web design partner with local relevance. We include service language, nearby neighborhoods, and location-specific content so your site can better match city-based searches.`}
+          contentPoints={['Local SEO', `${loc.city} web design`, 'Neighborhood coverage', 'Service pages', 'Quote requests', 'Lead generation']}
         />
       </div>
 

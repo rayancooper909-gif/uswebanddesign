@@ -87,10 +87,39 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <section className="py-18 md:py-24 px-4">
+        <div className="container-custom max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-4">
+              <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Web Design and SEO Services That Work Together</h2>
+              <p className="text-foreground/65 leading-relaxed">
+                Our service pages are built around what people actually search for: web design services, SEO services, branding help, ecommerce development, PPC support, and local business marketing. That gives your website more relevant text for indexing and a clearer message for visitors.
+              </p>
+              <p className="text-foreground/65 leading-relaxed">
+                We focus on service-specific structure, internal linking, and copy that explains what each offering includes, who it is for, and why it matters. That combination helps both search engines and customers understand your value faster.
+              </p>
+            </div>
+            <div className="premium-panel rounded-3xl p-6 space-y-3">
+              <h3 className="font-display font-semibold text-xl">Popular Service Topics</h3>
+              <ul className="space-y-2 text-foreground/70 text-sm leading-relaxed">
+                <li>• Custom website design and development</li>
+                <li>• SEO content and local landing pages</li>
+                <li>• Logo design, branding, and refreshes</li>
+                <li>• Ecommerce stores and product pages</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Booking form */}
       <BookingForm
         heading="Ready to Get Started?"
         subheading="Pick the service you need and let's build something great together. Free consultation, no strings attached."
+        eyebrow="Services & SEO"
+        contentTitle="Service Pages That Target What People Actually Search For"
+        contentBody="We create web design and marketing pages around specific service intent, so your site can show up for web design, branding, SEO, PPC, ecommerce, and local business searches with clearer relevance."
+        contentPoints={['Web design services', 'SEO services', 'PPC advertising', 'Logo design', 'Ecommerce websites', 'Local business pages']}
       />
 
       <Suspense fallback={<div className="min-h-[200px]" />}>

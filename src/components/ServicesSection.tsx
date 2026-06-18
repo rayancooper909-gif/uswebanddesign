@@ -111,13 +111,13 @@ export function ServicesSection() {
           stagger={reduceMotion ? 0 : 0.1}
           delayChildren={reduceMotion ? 0 : 0.05}
         >
-          {services.map((service) => (
-            <motion.div
-              key={service.title}
-              variants={staggerItem(!!reduceMotion)}
-              whileHover={{ y: -6 }}
-              className="premium-panel relative h-full rounded-2xl p-4 sm:p-5 md:p-6 overflow-hidden"
-            >
+            {services.map((service) => (
+              <motion.div
+                key={service.title}
+                variants={staggerItem(!!reduceMotion)}
+                whileHover={{ y: -6 }}
+                className="premium-panel relative h-full rounded-2xl p-4 sm:p-5 md:p-6 overflow-hidden"
+              >
               <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-white/10 to-accent/6" />
               <div className="relative z-10">
                 <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl border border-primary/25 bg-background/70 flex items-center justify-center mb-3 sm:mb-4">

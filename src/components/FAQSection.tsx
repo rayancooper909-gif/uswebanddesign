@@ -43,9 +43,9 @@ export function FAQSection() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="section-padding relative overflow-hidden">
+    <section className="section-padding section-blue-depth relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />
+      <div className="section-blue-layer absolute inset-0" />
       
       <div className="container-custom relative z-10">
         {/* Section Header */}
@@ -79,7 +79,7 @@ export function FAQSection() {
                   <AccordionTrigger className="text-left font-display font-semibold text-foreground hover:text-primary transition-colors py-4 sm:py-5 text-sm sm:text-base md:text-lg leading-snug">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-foreground/90 pb-5 leading-relaxed text-sm md:text-base">
+                  <AccordionContent className="text-background/85 pb-5 leading-relaxed text-sm md:text-base">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>

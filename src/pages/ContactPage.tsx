@@ -87,6 +87,31 @@ export default function ContactPage() {
         </div>
       </section>
 
+      <section className="py-18 md:py-24 px-4">
+        <div className="container-custom max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-4">
+              <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Contact Us About Web Design, SEO, and Branding</h2>
+              <p className="text-foreground/65 leading-relaxed">
+                If you are comparing web design agencies, SEO help, or a team to improve your online presence, this page gives you a direct way to reach us. We work with businesses that need better websites, better search visibility, and clearer lead flow.
+              </p>
+              <p className="text-foreground/65 leading-relaxed">
+                Use this contact page to ask about local SEO pages, service pages, website redesigns, ecommerce stores, and branding updates. The more specific your request, the easier it is for us to recommend the right solution.
+              </p>
+            </div>
+            <div className="premium-panel rounded-3xl p-6 space-y-3">
+              <h3 className="font-display font-semibold text-xl">Common Requests</h3>
+              <ul className="space-y-2 text-foreground/70 text-sm leading-relaxed">
+                <li>• New website design and development</li>
+                <li>• SEO content for service and location pages</li>
+                <li>• Branding, logo design, and visual refreshes</li>
+                <li>• E-commerce and lead generation funnels</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Existing contact / form section */}
       <ContactSection />
 

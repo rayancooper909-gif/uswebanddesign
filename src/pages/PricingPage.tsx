@@ -97,10 +97,39 @@ export default function PricingPage() {
         </div>
       </section>
 
+      <section className="py-18 md:py-24 px-4">
+        <div className="container-custom max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-4">
+              <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Pricing Pages With Real Buying Intent in Mind</h2>
+              <p className="text-foreground/65 leading-relaxed">
+                A pricing page should do more than list numbers. It should answer the questions people ask before they buy, including what is included, how long the project takes, and what kind of support is available after launch.
+              </p>
+              <p className="text-foreground/65 leading-relaxed">
+                We help shape pricing content around real search phrases like web design pricing, monthly SEO packages, and website maintenance plans so your site can attract visitors who are already comparing options.
+              </p>
+            </div>
+            <div className="premium-panel rounded-3xl p-6 space-y-3">
+              <h3 className="font-display font-semibold text-xl">Pricing Topics We Cover</h3>
+              <ul className="space-y-2 text-foreground/70 text-sm leading-relaxed">
+                <li>• Custom quotes for design and development</li>
+                <li>• SEO and marketing retainers</li>
+                <li>• Support, revisions, and maintenance</li>
+                <li>• Project scope, timelines, and deliverables</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Booking form */}
       <BookingForm
         heading="Get a Custom Quote"
         subheading="Not sure which plan fits? Book a free call and we'll recommend the best option for your budget and goals."
+        eyebrow="Pricing & Quotes"
+        contentTitle="Pricing Pages That Answer Cost Questions Up Front"
+        contentBody="People often search for web design pricing, SEO packages, and ongoing support before they contact a business. We help shape that intent into useful copy so visitors understand your offer faster and keep moving toward a quote."
+        contentPoints={['Web design pricing', 'SEO packages', 'Maintenance plans', 'Ongoing support', 'Custom quotes', 'Transparent costs']}
       />
 
       <Suspense fallback={<div className="min-h-[200px]" />}>

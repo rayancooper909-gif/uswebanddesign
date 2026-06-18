@@ -38,9 +38,38 @@ const Portfolio = () => {
         </Suspense>
       </main>
 
+      <section className="py-18 md:py-24 px-4">
+        <div className="container-custom max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-4">
+              <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Portfolio Work That Supports Search Visibility</h2>
+              <p className="text-foreground/65 leading-relaxed">
+                A portfolio page can help with Google indexing when it includes context about the type of work, the industries served, and the result the project was meant to achieve. We use that approach so your work is easier to understand for both people and search engines.
+              </p>
+              <p className="text-foreground/65 leading-relaxed">
+                This gives your website more relevant terms around design projects, branding, conversion-focused redesigns, and custom website builds, instead of relying on images alone.
+              </p>
+            </div>
+            <div className="premium-panel rounded-3xl p-6 space-y-3">
+              <h3 className="font-display font-semibold text-xl">Portfolio Story Angles</h3>
+              <ul className="space-y-2 text-foreground/70 text-sm leading-relaxed">
+                <li>• Before and after redesigns</li>
+                <li>• Industry-specific web projects</li>
+                <li>• Ecommerce and lead generation builds</li>
+                <li>• Branding, layout, and conversion improvements</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <BookingForm
         heading="Love What You See?"
         subheading="Let's create something just as impressive for your brand. Book a free consultation to get started."
+        eyebrow="Portfolio & Case Studies"
+        contentTitle="Portfolio Content That Builds Trust and Search Relevance"
+        contentBody="A strong portfolio page does more than show visuals. It gives Google and visitors more context around the industries you serve, the problems you solve, and the results your design work is meant to create."
+        contentPoints={['Case study copy', 'Portfolio SEO', 'Industry examples', 'Before and after', 'Conversion results', 'Creative direction']}
       />
 
       <Suspense fallback={<div className="min-h-[200px]" />}>

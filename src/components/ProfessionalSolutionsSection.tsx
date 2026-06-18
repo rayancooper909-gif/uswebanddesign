@@ -42,8 +42,8 @@ export function ProfessionalSolutionsSection() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="professional-solutions" className="section-padding relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />
+    <section id="professional-solutions" className="section-padding section-blue-depth relative overflow-hidden">
+      <div className="section-blue-layer absolute inset-0" />
       <div className="container-custom relative z-10">
         <div className="text-center mb-10 md:mb-12">
           <Reveal

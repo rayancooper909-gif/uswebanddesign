@@ -17,10 +17,10 @@
     z-index: -2;
     pointer-events: none;
     background:
-      radial-gradient(circle at 16% 20%, hsl(218 62% 30% / 0.34) 0%, transparent 46%),
+      radial-gradient(circle at 16% 20%, hsl(var(--flag-blue) / 0.34) 0%, transparent 46%),
       radial-gradient(circle at 84% 84%, hsl(var(--gold-light) / 0.2) 0%, transparent 44%),
       radial-gradient(circle at 52% 48%, hsl(var(--foreground) / 0.1) 0%, transparent 58%),
-      radial-gradient(circle at 76% 18%, hsl(220 52% 24% / 0.22) 0%, transparent 44%),
+      radial-gradient(circle at 76% 18%, hsl(var(--flag-blue) / 0.22) 0%, transparent 44%),
       linear-gradient(
         135deg,
         hsl(220 58% 20% / 0.14) 0%,
@@ -125,6 +125,8 @@
     --border: 0 0% 90%;
     --input: 0 0% 90%;
     --ring: 352 78% 46%;
+    /* American flag blue for background accents */
+    --flag-blue: 240 34% 33%;
 
     --radius: 0.5rem;
 
@@ -212,6 +214,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 96px;
   }
 
   body {
@@ -220,9 +223,9 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     background-image:
-      radial-gradient(circle at 18% 0%, hsl(218 62% 30% / 0.2), transparent 52%),
+      radial-gradient(circle at 18% 0%, hsl(var(--flag-blue) / 0.2), transparent 52%),
       radial-gradient(circle at 82% 100%, hsl(var(--gold-light) / 0.13), transparent 46%),
-      radial-gradient(circle at 70% 18%, hsl(220 52% 25% / 0.14), transparent 46%),
+      radial-gradient(circle at 70% 18%, hsl(var(--flag-blue) / 0.14), transparent 46%),
       linear-gradient(
         180deg,
         hsl(var(--background)) 0%,
@@ -250,6 +253,203 @@
 
   .section-padding {
     @apply py-12 md:py-24 lg:py-32;
+  }
+
+  .section-blue-depth {
+    position: relative;
+    background:
+      radial-gradient(circle at 12% 18%, hsl(var(--primary) / 0.22) 0%, transparent 34%),
+      radial-gradient(circle at 86% 72%, hsl(var(--flag-blue) / 0.5) 0%, transparent 36%),
+      linear-gradient(135deg, hsl(220 48% 11%) 0%, hsl(224 46% 18%) 48%, hsl(220 42% 13%) 100%);
+    color: hsl(var(--background));
+  }
+
+  .section-blue-depth::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(135deg, transparent 0 48%, hsl(var(--background) / 0.08) 49%, transparent 51% 100%),
+      repeating-linear-gradient(
+        0deg,
+        hsl(var(--background) / 0.035) 0px,
+        hsl(var(--background) / 0.035) 1px,
+        transparent 1px,
+        transparent 34px
+      );
+    background-size: 92px 92px, 100% 100%;
+    mix-blend-mode: screen;
+    opacity: 0.38;
+  }
+
+  .section-blue-depth .section-blue-layer {
+    background:
+      linear-gradient(180deg, hsl(var(--background) / 0.08) 0%, transparent 18%, transparent 76%, hsl(var(--background) / 0.06) 100%),
+      repeating-linear-gradient(
+        90deg,
+        hsl(var(--background) / 0.045) 0px,
+        hsl(var(--background) / 0.045) 1px,
+        transparent 1px,
+        transparent 96px
+      );
+  }
+
+  .section-blue-depth [class~='text-foreground'] {
+    color: hsl(var(--background));
+  }
+
+  .section-blue-depth [class~='text-muted-foreground'] {
+    color: hsl(var(--background) / 0.74);
+  }
+
+  .section-blue-depth .premium-panel {
+    border-color: hsl(var(--background) / 0.16);
+    background: hsl(var(--background) / 0.08);
+    box-shadow:
+      0 16px 42px -26px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .section-blue-depth .card-shade {
+    border-color: hsl(var(--background) / 0.18);
+    background: hsl(var(--background) / 0.92);
+  }
+
+  .vibe-divider {
+    position: relative;
+    height: 28px;
+    overflow: hidden;
+  }
+
+  .vibe-divider::before,
+  .vibe-divider::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    transform: translateY(-50%);
+  }
+
+  .vibe-divider::before {
+    background: linear-gradient(90deg, transparent, hsl(var(--foreground) / 0.18), transparent);
+  }
+
+  .vibe-divider::after {
+    height: 10px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.08), hsl(var(--primary) / 0.18), hsl(var(--background) / 0.34), hsl(var(--primary) / 0.18), hsl(var(--primary) / 0.08), transparent);
+    filter: blur(9px);
+    animation: divider-breathe 5.5s ease-in-out infinite;
+  }
+
+  .vibe-divider__ticks {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        transparent 0,
+        transparent 23px,
+        hsl(var(--foreground) / 0.12) 23px,
+        hsl(var(--foreground) / 0.12) 24px
+      );
+    mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+    opacity: 0.22;
+    animation: divider-ticks 7s ease-in-out infinite;
+  }
+
+  .vibe-divider__pulse {
+    position: absolute;
+    left: 38%;
+    right: 38%;
+    top: 50%;
+    height: 3px;
+    transform: translateY(-50%);
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.42), hsl(var(--background) / 0.55), hsl(var(--primary) / 0.42), transparent);
+    box-shadow: 0 0 16px hsl(var(--primary) / 0.16);
+    animation: divider-pulse 5.5s ease-in-out infinite;
+  }
+
+  @keyframes divider-breathe {
+    0%, 100% {
+      opacity: 0.45;
+      transform: translateY(-50%) scaleX(0.88);
+    }
+    50% {
+      opacity: 0.85;
+      transform: translateY(-50%) scaleX(1);
+    }
+  }
+
+  @keyframes divider-ticks {
+    0%, 100% {
+      opacity: 0.16;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  @keyframes divider-pulse {
+    0%, 100% {
+      opacity: 0.55;
+      transform: translateY(-50%) scaleX(0.7);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-50%) scaleX(1.2);
+    }
+  }
+
+  .kinetic-ticker {
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(135deg, hsl(var(--background) / 0.72), hsl(var(--background) / 0.42)),
+      repeating-linear-gradient(
+        135deg,
+        hsl(var(--foreground) / 0.035) 0px,
+        hsl(var(--foreground) / 0.035) 1px,
+        transparent 1px,
+        transparent 12px
+      );
+    box-shadow:
+      0 18px 50px -34px hsl(var(--foreground) / 0.8),
+      inset 0 1px 0 hsl(var(--background) / 0.75);
+  }
+
+  .kinetic-ticker::before {
+    content: '';
+    position: absolute;
+    inset-inline: 12px;
+    top: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.86), hsl(var(--background) / 0.72), transparent);
+  }
+
+  .ticker-row {
+    mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  }
+
+  .ticker-chip {
+    position: relative;
+    gap: 0.5rem;
+    box-shadow: 0 8px 22px -18px hsl(var(--foreground) / 0.7);
+  }
+
+  .ticker-chip::before {
+    content: '';
+    width: 0.4rem;
+    height: 0.4rem;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    background: hsl(var(--primary));
+    box-shadow: 0 0 0 4px hsl(var(--primary) / 0.12);
   }
 
   .premium-panel {
@@ -370,6 +570,47 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
+
+  .section-loader {
+    @apply overflow-hidden rounded-lg border border-border/60 bg-background/75 p-5 shadow-sm;
+    content-visibility: auto;
+  }
+
+  .section-loader__line,
+  .section-loader__grid > div {
+    @apply rounded-md;
+    background: linear-gradient(
+      90deg,
+      hsl(var(--muted) / 0.55),
+      hsl(var(--background) / 0.95),
+      hsl(var(--muted) / 0.55)
+    );
+    background-size: 220% 100%;
+    animation: loader-sheen 1.35s ease-in-out infinite;
+  }
+
+  .section-loader__line {
+    @apply mb-3 h-5;
+    max-width: 520px;
+  }
+
+  .section-loader__line--short {
+    @apply h-3;
+    max-width: 180px;
+  }
+
+  .section-loader__grid {
+    @apply mt-8 grid gap-4 sm:grid-cols-3;
+  }
+
+  .section-loader__grid > div {
+    @apply h-44;
+  }
+
+  @keyframes loader-sheen {
+    0% { background-position: 120% 0; }
+    100% { background-position: -120% 0; }
+  }
 }
 
 @layer base {
@@ -381,6 +622,17 @@
   @media (pointer: coarse) {
     .cursor-none {
       cursor: auto !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    .section-loader__line,
+    .section-loader__grid > div {
+      animation: none;
     }
   }
 

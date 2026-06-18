@@ -115,10 +115,39 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="py-18 md:py-24 px-4">
+        <div className="container-custom max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-4">
+              <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">About US Web and Design</h2>
+              <p className="text-foreground/65 leading-relaxed">
+                US Web and Design is a web design company focused on building websites that are easy to find, easy to trust, and easy to contact. We work on business websites, local landing pages, SEO-friendly service pages, and brand-focused redesigns for companies that want more from their online presence.
+              </p>
+              <p className="text-foreground/65 leading-relaxed">
+                Our process combines design, copy, and search intent so your pages can support Google indexing while still feeling natural for real visitors. That means stronger relevance for searches like web design services, branding support, and local business websites.
+              </p>
+            </div>
+            <div className="premium-panel rounded-3xl p-6 space-y-3">
+              <h3 className="font-display font-semibold text-xl">What We Build</h3>
+              <ul className="space-y-2 text-foreground/70 text-sm leading-relaxed">
+                <li>• Website redesigns for growing businesses</li>
+                <li>• Local SEO pages for city and service terms</li>
+                <li>• Conversion-focused landing pages and quote pages</li>
+                <li>• Brand identity and content structure for better trust</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Booking form */}
       <BookingForm
         heading="Start a Conversation"
         subheading="We'd love to learn about your business and show you what's possible. Book a free, no-pressure call."
+        eyebrow="About Our Agency"
+        contentTitle="A Web Design Partner Focused on Real Search Demand"
+        contentBody="US Web and Design helps businesses build pages that answer real search intent. That means clearer service pages, better local visibility, stronger brand trust, and more opportunities for customers to contact you."
+        contentPoints={['About page SEO', 'Service pages', 'Brand messaging', 'Local visibility', 'Website refresh', 'Lead capture']}
       />
 
       <Suspense fallback={<div className="min-h-[200px]" />}>

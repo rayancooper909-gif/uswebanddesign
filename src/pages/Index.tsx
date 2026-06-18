@@ -1,7 +1,7 @@
-import { lazy, Suspense } from 'react';
-import { motion } from 'framer-motion';
+import { lazy } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { HeroSection } from '@/components/HeroSection';
+import { LazySection, SectionSkeleton } from '@/components/LazySection';
 
 // Lazy load below-the-fold components to reduce initial bundle size
 const AboutSection = lazy(() => import('@/components/AboutSection').then(m => ({ default: m.AboutSection })));
@@ -14,13 +14,10 @@ const ContactSection = lazy(() => import('@/components/ContactSection').then(m =
 const Footer = lazy(() => import('@/components/Footer').then(m => ({ default: m.Footer })));
 
 const SectionDivider = () => (
-  <div className="container-custom py-4">
-    <div className="relative h-px overflow-hidden bg-border/55">
-      <motion.div
-        className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-primary/65 to-transparent"
-        animate={{ x: ['-120%', '320%'] }}
-        transition={{ duration: 3.8, repeat: Infinity, ease: 'linear' }}
-      />
+  <div className="container-custom py-5 md:py-6" aria-hidden="true">
+    <div className="vibe-divider">
+      <div className="vibe-divider__ticks" />
+      <div className="vibe-divider__pulse" />
     </div>
   </div>
 );
@@ -31,25 +28,37 @@ const Index = () => {
       <Navigation />
       <main>
         <HeroSection />
-        <Suspense fallback={<div className="min-h-[200px]" />}>
+        <LazySection fallback={<SectionSkeleton minHeight="520px" />} minHeight="520px">
           <AboutSection />
+        </LazySection>
+        <LazySection fallback={<SectionSkeleton minHeight="560px" />} minHeight="560px">
           <SectionDivider />
           <ProfessionalSolutionsSection />
+        </LazySection>
+        <LazySection fallback={<SectionSkeleton minHeight="620px" />} minHeight="620px">
           <SectionDivider />
           <ServicesSection />
+        </LazySection>
+        <LazySection fallback={<SectionSkeleton minHeight="640px" />} minHeight="640px">
           <SectionDivider />
           <PortfolioSection limit={15} />
+        </LazySection>
+        <LazySection fallback={<SectionSkeleton minHeight="640px" />} minHeight="640px">
           <SectionDivider />
           <PricingSection />
+        </LazySection>
+        <LazySection fallback={<SectionSkeleton minHeight="640px" />} minHeight="640px">
           <SectionDivider />
           <ContactSection />
+        </LazySection>
+        <LazySection fallback={<SectionSkeleton minHeight="520px" />} minHeight="520px">
           <SectionDivider />
           <FAQSection />
-        </Suspense>
+        </LazySection>
       </main>
-      <Suspense fallback={<div className="min-h-[200px]" />}>
+      <LazySection fallback={<SectionSkeleton minHeight="260px" />} minHeight="260px">
         <Footer />
-      </Suspense>
+      </LazySection>
     </div>
   );
 };

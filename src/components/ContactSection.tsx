@@ -163,6 +163,13 @@ export function ContactSection() {
         >
           {/* Contact Info */}
           <motion.div variants={staggerItem(!!reduceMotion)} className="space-y-6 md:space-y-8">
+            <div className="card-shade p-6 sm:p-7">
+              <h3 className="font-display font-semibold text-foreground mb-3 text-xl">Why Businesses Reach Out</h3>
+              <p className="text-foreground/65 leading-relaxed">
+                We help brands build websites that are clear, search-friendly, and easy to act on. If you need more visibility, better leads, or a stronger online presence, this is the right place to start.
+              </p>
+            </div>
+
             <div className="space-y-5 md:space-y-6">
               <div className="flex items-start gap-4 group">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -290,8 +297,8 @@ export function ContactSection() {
                       setOptIn(!!checked);
                       if (checked) setOptInError(false);
                     }}
-                    className="mt-0.5 shrink-0"
-                  />
+                  className="mt-0.5 shrink-0"
+                />
                   <label htmlFor="cs-opt-in" className="text-xs text-foreground/70 leading-relaxed cursor-pointer">
                     I agree to receive communications by text messages regarding updates on project status, meeting reminders, marketing, and general communication related to the projects from US Web and Design about my inquiry. You may opt out by replying STOP or reply HELP for more information. Message frequency varies. Message and data rates may apply. You may review our{' '}
                     <Link to="/privacy-policy" className="text-primary underline hover:text-primary/80">Privacy Policy</Link>{' '}

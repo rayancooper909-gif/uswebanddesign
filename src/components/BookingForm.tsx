@@ -29,11 +29,19 @@ const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/rayancooper909@gmail.com';
 interface BookingFormProps {
   heading?: string;
   subheading?: string;
+  eyebrow?: string;
+  contentTitle?: string;
+  contentBody?: string;
+  contentPoints?: string[];
 }
 
 export function BookingForm({
   heading = 'Book a Free Consultation',
   subheading = "Tell us about your project and we'll get back to you within 24 hours with a custom plan.",
+  eyebrow = 'Free Consultation',
+  contentTitle = 'SEO-Friendly Web Design, Branding, and Growth Support',
+  contentBody = 'We build websites that are designed to rank, load quickly, and turn visitors into real inquiries. Each project is shaped around your goals, your market, and the kind of customers you want to attract.',
+  contentPoints = ['Web design', 'SEO content', 'Branding', 'Local landing pages', 'Lead generation', 'Ecommerce'],
 }: BookingFormProps) {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -98,7 +106,7 @@ export function BookingForm({
 
   return (
     <section className="py-20 md:py-28 bg-secondary/40">
-      <div className="container-custom max-w-3xl mx-auto">
+      <div className="container-custom max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -108,90 +116,134 @@ export function BookingForm({
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-xs font-medium text-foreground/75 mb-4">
             <CalendarCheck className="w-4 h-4 text-primary" />
-            Free Consultation
+            {eyebrow}
           </span>
           <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight mb-4">{heading}</h2>
           <p className="text-foreground/65 text-base md:text-lg max-w-xl mx-auto">{subheading}</p>
         </motion.div>
 
-        <motion.form
-          onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.15 }}
-          className="premium-panel rounded-3xl p-8 md:p-10 space-y-6"
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div className="space-y-2">
-              <Label htmlFor="bf-name">Full Name <span className="text-primary">*</span></Label>
-              <Input id="bf-name" placeholder="Jane Smith" value={form.name} onChange={set('name')} required />
+        <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-8 md:gap-10 items-start">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.05 }}
+            className="premium-panel rounded-3xl p-8 md:p-10 space-y-6"
+          >
+            <div className="space-y-3">
+              <h3 className="text-2xl md:text-3xl font-display font-bold tracking-tight">{contentTitle}</h3>
+              <p className="text-foreground/68 leading-relaxed">{contentBody}</p>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="bf-email">Email Address <span className="text-primary">*</span></Label>
-              <Input id="bf-email" type="email" placeholder="jane@company.com" value={form.email} onChange={set('email')} required />
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div className="space-y-2">
-              <Label htmlFor="bf-phone">Phone Number</Label>
-              <Input id="bf-phone" type="tel" placeholder="+1 (555) 000-0000" value={form.phone} onChange={set('phone')} />
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="rounded-2xl border border-border bg-background/75 p-5">
+                <p className="text-sm font-semibold text-foreground mb-2">Search-focused pages</p>
+                <p className="text-sm text-foreground/65 leading-relaxed">
+                  Clear service sections, local SEO copy, and conversion-driven structure help people find you and trust you faster.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-border bg-background/75 p-5">
+                <p className="text-sm font-semibold text-foreground mb-2">Built for action</p>
+                <p className="text-sm text-foreground/65 leading-relaxed">
+                  Strong calls to action, short response times, and a clean user journey keep visitors moving toward contact.
+                </p>
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="bf-service">Service Interested In <span className="text-primary">*</span></Label>
-              <Select value={form.service} onValueChange={v => setForm(p => ({ ...p, service: v }))}>
-                <SelectTrigger id="bf-service">
-                  <SelectValue placeholder="Select a service" />
-                </SelectTrigger>
-                <SelectContent>
-                  {services.map(s => (
-                    <SelectItem key={s} value={s}>{s}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+
+            <div className="rounded-2xl border border-border bg-background/75 p-5 space-y-3">
+              <p className="text-sm font-semibold text-foreground">What you can ask us for</p>
+              <div className="flex flex-wrap gap-2">
+                {contentPoints.map(item => (
+                  <span key={item} className="rounded-full border border-border bg-background px-3 py-1 text-xs text-foreground/70">
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="space-y-2">
-            <Label htmlFor="bf-message">Tell Us About Your Project</Label>
-            <Textarea
-              id="bf-message"
-              placeholder="Describe your goals, timeline, or any specific requirements..."
-              rows={5}
-              value={form.message}
-              onChange={set('message')}
-            />
-          </div>
+          <motion.form
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.12 }}
+            className="premium-panel rounded-3xl p-8 md:p-10 space-y-6"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="space-y-2">
+                <Label htmlFor="bf-name">Full Name <span className="text-primary">*</span></Label>
+                <Input id="bf-name" placeholder="Jane Smith" value={form.name} onChange={set('name')} required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="bf-email">Email Address <span className="text-primary">*</span></Label>
+                <Input id="bf-email" type="email" placeholder="jane@company.com" value={form.email} onChange={set('email')} required />
+              </div>
+            </div>
 
-          <div className="space-y-2">
-            <div className="flex items-start gap-3">
-              <Checkbox
-                id="bf-opt-in"
-                checked={optIn}
-                onCheckedChange={(checked) => {
-                  setOptIn(!!checked);
-                  if (checked) setOptInError(false);
-                }}
-                className="mt-0.5 shrink-0"
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="space-y-2">
+                <Label htmlFor="bf-phone">Phone Number</Label>
+                <Input id="bf-phone" type="tel" placeholder="+1 (555) 000-0000" value={form.phone} onChange={set('phone')} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="bf-service">Service Interested In <span className="text-primary">*</span></Label>
+                <Select value={form.service} onValueChange={v => setForm(p => ({ ...p, service: v }))}>
+                  <SelectTrigger id="bf-service">
+                    <SelectValue placeholder="Select a service" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {services.map(s => (
+                      <SelectItem key={s} value={s}>{s}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="bf-message">Tell Us About Your Project</Label>
+              <Textarea
+                id="bf-message"
+                placeholder="Describe your goals, timeline, or any specific requirements..."
+                rows={5}
+                value={form.message}
+                onChange={set('message')}
               />
-              <label htmlFor="bf-opt-in" className="text-xs text-foreground/70 leading-relaxed cursor-pointer">
-                I agree to receive communications by text messages regarding updates on project status, meeting reminders, marketing, and general communication related to the projects from US Web and Design about my inquiry. You may opt out by replying STOP or reply HELP for more information. Message frequency varies. Message and data rates may apply. You may review our{' '}
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-start gap-3">
+                <Checkbox
+                  id="bf-opt-in"
+                  checked={optIn}
+                  onCheckedChange={(checked) => {
+                    setOptIn(!!checked);
+                    if (checked) setOptInError(false);
+                  }}
+                  className="mt-0.5 shrink-0"
+                />
+                <label htmlFor="bf-opt-in" className="text-xs text-foreground/70 leading-relaxed cursor-pointer">
+                  By entering your phone number, you agree to receive text messages according to our terms of use and privacy policy.
+                </label>
+              </div>
+              <p className="text-[11px] text-foreground/50 leading-relaxed">
+                You may review our{' '}
                 <Link to="/privacy-policy" className="text-primary underline hover:text-primary/80">Privacy Policy</Link>{' '}
                 to learn how your data is used.
-              </label>
+              </p>
+              {optInError && <p className="text-sm text-destructive">Please agree to receive communications to proceed.</p>}
             </div>
-            {optInError && <p className="text-sm text-destructive">Please agree to receive communications to proceed.</p>}
-          </div>
 
-          <Button type="submit" variant="gold" size="lg" className="w-full gap-2" disabled={loading}>
-            {loading ? 'Sending…' : <><Send className="w-4 h-4" /> Book My Free Consultation</>}
-          </Button>
+            <Button type="submit" variant="gold" size="lg" className="w-full gap-2" disabled={loading}>
+              {loading ? 'Sending…' : <><Send className="w-4 h-4" /> Book My Free Consultation</>}
+            </Button>
 
-          <p className="text-center text-xs text-foreground/50">
-            No commitment required. We'll respond within 24 hours.
-          </p>
-        </motion.form>
+            <p className="text-center text-xs text-foreground/50">
+              No commitment required. We'll respond within 24 hours.
+            </p>
+          </motion.form>
+        </div>
       </div>
     </section>
   );

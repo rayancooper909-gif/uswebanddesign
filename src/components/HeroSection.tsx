@@ -1,10 +1,32 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { KineticTicker } from '@/components/KineticTicker';
+import { useToast } from '@/hooks/use-toast';
+import heroPoster from '@/assets/hero/Screenshot 2026-04-26 202016.png';
 
 type ReviewBrand = 'Google Reviews' | 'Yelp' | 'Trustpilot';
+
+const heroServices = [
+  'Web Development',
+  'Logo Design',
+  'Branding',
+  'Business Cards',
+  'Online Store',
+  'SEO',
+  'PPC / Ads',
+  'Social Media Marketing',
+  'Domain & Hosting',
+  'Combo Plan',
+  'Other',
+];
+
+const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/rayancooper909@gmail.com';
 
 function useCountUp(end: number, duration: number = 1200, start: boolean = false) {
   const [count, setCount] = useState(0);
@@ -140,8 +162,171 @@ function SocialBadge({
   );
 }
 
+function HeroBookingForm() {
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [optIn, setOptIn] = useState(false);
+  const [optInError, setOptInError] = useState(false);
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    service: '',
+  });
+
+  const set = (field: keyof typeof form) =>
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      setForm(prev => ({ ...prev, [field]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!form.name.trim() || !form.email.trim() || !form.service) {
+      toast({ title: 'Please fill in your name, email, and service.', variant: 'destructive' });
+      return;
+    }
+
+    if (!optIn) {
+      setOptInError(true);
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(FORMSUBMIT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone || 'Not provided',
+          service: form.service,
+          message: 'Submitted from homepage hero form.',
+          _subject: `Hero Booking Request: ${form.service} - ${form.name}`,
+          _captcha: 'false',
+        }),
+      });
+
+      if (!res.ok) throw new Error('Failed to send');
+
+      toast({
+        title: 'Booking request received!',
+        description: "We'll reach out within 24 hours to confirm your consultation.",
+      });
+
+      setForm({ name: '', email: '', phone: '', service: '' });
+      setOptIn(false);
+    } catch {
+      toast({ title: 'Something went wrong. Please try again.', variant: 'destructive' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <motion.form
+      onSubmit={handleSubmit}
+      initial={{ opacity: 0, x: 28 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.65, delay: 0.45 }}
+      className="mx-auto w-full max-w-[640px] rounded-[1.35rem] border border-white/70 bg-white/95 p-5 text-left text-foreground shadow-2xl backdrop-blur-xl sm:p-6 md:p-7 lg:ml-auto"
+    >
+      <div className="mb-4 flex justify-center">
+        <span className="inline-flex items-center rounded-full bg-primary px-4 py-1 text-xs font-bold uppercase tracking-[0.12em] text-primary-foreground shadow-sm">
+          30% Off
+        </span>
+      </div>
+      <h2 className="mb-5 text-center font-display text-4xl font-extrabold leading-none tracking-normal text-primary sm:text-5xl">
+        Book Now
+      </h2>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <Input
+          aria-label="Full Name"
+          placeholder="Full Name"
+          value={form.name}
+          onChange={set('name')}
+          required
+          className="h-12 rounded border-border bg-white text-base shadow-none focus-visible:ring-primary/35"
+        />
+        <Input
+          aria-label="Email Address"
+          type="email"
+          placeholder="Enter Your Email"
+          value={form.email}
+          onChange={set('email')}
+          required
+          className="h-12 rounded border-border bg-white text-base shadow-none focus-visible:ring-primary/35"
+        />
+      </div>
+
+      <Select value={form.service} onValueChange={value => setForm(prev => ({ ...prev, service: value }))}>
+        <SelectTrigger
+          aria-label="Select Services"
+          className="mt-4 h-12 rounded border-border bg-white text-base shadow-none focus:ring-primary/35"
+        >
+          <SelectValue placeholder="Select Services" />
+        </SelectTrigger>
+        <SelectContent>
+          {heroServices.map(service => (
+            <SelectItem key={service} value={service}>
+              {service}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Input
+        aria-label="Phone Number"
+        type="tel"
+        placeholder="Phone"
+        value={form.phone}
+        onChange={set('phone')}
+        className="mt-4 h-12 rounded border-border bg-white text-base shadow-none focus-visible:ring-primary/35"
+      />
+
+      <div className="mt-4 space-y-2">
+        <div className="flex items-start gap-3">
+          <Checkbox
+            id="hero-opt-in"
+            checked={optIn}
+            onCheckedChange={checked => {
+              setOptIn(!!checked);
+              if (checked) setOptInError(false);
+            }}
+            className="mt-1 shrink-0 border-muted-foreground/40 bg-white data-[state=checked]:border-primary data-[state=checked]:bg-primary"
+          />
+          <label htmlFor="hero-opt-in" className="cursor-pointer text-sm leading-relaxed text-foreground/82">
+            * I agree to receive communications by text messages regarding updates on project status,
+            meeting reminders, marketing, and general communication related to the projects from US Web
+            and Design about my inquiry. You may opt out by replying STOP or reply HELP for more
+            information. Message frequency varies. Message and data rates may apply. You may review our{' '}
+            <Link to="/privacy-policy" className="font-medium text-primary hover:underline">
+              Privacy Policy
+            </Link>{' '}
+            to learn how your data is used.
+          </label>
+        </div>
+        {optInError && <p className="pl-8 text-sm font-medium text-destructive">Please agree to receive communications to proceed.</p>}
+      </div>
+
+      <Button
+        type="submit"
+        variant="default"
+        size="lg"
+        disabled={loading}
+        className="mt-5 h-14 w-full rounded-full bg-primary text-base font-bold text-primary-foreground hover:bg-primary/90"
+      >
+        {loading ? 'Submitting...' : 'Submit'}
+      </Button>
+    </motion.form>
+  );
+}
+
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (videoRef.current) {
@@ -150,24 +335,34 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section id="home" className="relative flex min-h-[88svh] md:min-h-screen items-center justify-center overflow-hidden pt-24">
-      {/* Video background */}
+    <section id="home" className="relative flex min-h-[88svh] items-center justify-center overflow-hidden pt-24 md:min-h-screen">
       <div className="absolute inset-0 overflow-hidden">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 h-full w-full object-cover opacity-70"
+        <div
+          className="absolute inset-0 bg-cover bg-center blur-[5px] brightness-80 contrast-95 saturate-90"
+          style={{ backgroundImage: `url(${heroPoster})` }}
           aria-hidden="true"
-        >
-          <source src="/hero-bg.mp4" type="video/mp4" />
-        </video>
+        />
+        {!shouldReduceMotion && (
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={heroPoster}
+            className="absolute inset-0 h-full w-full scale-105 object-cover blur-[5px] brightness-80 contrast-95 saturate-90"
+            aria-hidden="true"
+          >
+            <source src="/hero-bg.mp4" type="video/mp4" />
+          </video>
+        )}
+        <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
       </div>
 
       <div className="container-custom relative z-10 my-4 w-full">
-        <div className="max-w-5xl mx-auto text-center">
+        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,0.72fr)] xl:gap-12">
+          <div className="mx-auto max-w-3xl text-center lg:mx-0 lg:text-left">
           {/* Tagline */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -185,7 +380,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-5 text-4xl font-display font-bold leading-[1.02] tracking-tight sm:text-5xl md:mb-6 md:text-5xl lg:text-6xl xl:text-7xl [text-shadow:0_2px_12px_rgba(0,0,0,0.35)]"
+            className="mb-5 text-4xl font-display font-bold leading-[1.02] tracking-tight text-white sm:text-5xl md:mb-6 md:text-5xl lg:text-6xl xl:text-7xl [text-shadow:0_2px_12px_rgba(0,0,0,0.35)]"
           >
             Premium Websites That
             <br />
@@ -197,18 +392,30 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mx-auto mb-8 max-w-2xl rounded-xl border border-white/10 bg-background/5 backdrop-blur-sm px-4 py-3 text-base leading-relaxed text-foreground sm:text-lg md:mb-10 md:text-xl [text-shadow:0_2px_10px_rgba(0,0,0,0.28)] shadow-lg"
+            className="mx-auto mb-7 max-w-2xl rounded-xl border border-white/10 bg-background/5 px-4 py-3 text-base leading-relaxed text-white shadow-lg backdrop-blur-sm sm:text-lg md:mb-8 md:text-xl lg:mx-0 [text-shadow:0_2px_10px_rgba(0,0,0,0.28)]"
           >
             Web design, branding, and marketing systems built to attract attention and turn it into leads.
             Launch with confidence, backed by strategy, clean builds, and ongoing support.
           </motion.p>
+
+          <motion.ul
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.47 }}
+            className="mx-auto mb-8 max-w-2xl space-y-2 text-left text-sm font-medium text-white sm:text-base lg:mx-0"
+          >
+            <li>✓ Custom-built websites that engage and convert.</li>
+            <li>✓ Choose the services that fit your brand best.</li>
+            <li>✓ Transparent pricing with no hidden fees.</li>
+            <li>✓ Satisfaction-focused support from start to launch.</li>
+          </motion.ul>
 
           {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4"
+            className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4 lg:justify-start"
           >
             <Button variant="gold" size="xl" className="group w-full sm:w-auto" asChild>
               <a href="#pricing">
@@ -229,7 +436,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.62 }}
-            className="mt-8 flex flex-col items-stretch justify-center gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
+            className="mt-8 flex flex-col items-stretch justify-center gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 lg:justify-start"
           >
             <div className="flex justify-center sm:block">
               <SocialBadge brand="Google Reviews" rating={5.0} reviews={200} reviewsSuffix="+" />
@@ -243,6 +450,15 @@ export function HeroSection() {
           </motion.div>
 
           <KineticTicker />
+          </div>
+
+          <div className="hidden lg:block">
+            <HeroBookingForm />
+          </div>
+        </div>
+
+        <div className="mt-10 lg:hidden">
+          <HeroBookingForm />
         </div>
       </div>
 

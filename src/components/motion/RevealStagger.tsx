@@ -12,7 +12,7 @@ type RevealStaggerProps = {
 } & Omit<HTMLMotionProps<'div'>, 'children'>;
 
 export const RevealStagger = React.forwardRef<HTMLDivElement, RevealStaggerProps>(function RevealStagger(
-  { children, stagger = 0.12, delayChildren = 0.05, viewport = viewportOnce, ...rest },
+  { children, stagger = 0.06, delayChildren = 0.02, viewport = viewportOnce, ...rest },
   ref
 ) {
   const reduceMotion = useReducedMotion();
